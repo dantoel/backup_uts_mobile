@@ -7,6 +7,7 @@ import 'faktor_permasalahan.dart';
 import 'lihat_detail.dart';
 import 'total_responden_gender.dart';
 import 'total_responden_negara.dart';
+import 'detail_responden.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final dio = Dio();
 
-  String url_domain = "http://192.168.77.238:8000/";
+  String url_domain = "http://192.168.0.106:8000/";
   // String url_count_responden = ;
   // String url_create_data = "${url_domain}api/create_data";
   // String url_show_data = "${url_domain}api/show_data";
@@ -140,11 +141,11 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => lihat_detail()),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => lihat_detail()),
+                                  // );
                                 },
                                 child: Card(
                                   shape: RoundedRectangleBorder(
@@ -194,11 +195,11 @@ class _HomePageState extends State<HomePage> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => lihat_detail()),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => lihat_detail()),
+                                  // );
                                 },
                                 child: Card(
                                   shape: RoundedRectangleBorder(
@@ -250,11 +251,11 @@ class _HomePageState extends State<HomePage> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => lihat_detail()),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => lihat_detail()),
+                                  // );
                                 },
                                 child: Card(
                                   shape: RoundedRectangleBorder(
@@ -351,7 +352,7 @@ class _HomePageState extends State<HomePage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            responden_gender()),
+                                            total_responden_gender()),
                                   );
                                 },
                                 child: Card(
@@ -443,7 +444,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => lihat_detail()),
+                    MaterialPageRoute(builder: (context) => detail_responden()),
                   );
                 },
                 style: ElevatedButton.styleFrom(

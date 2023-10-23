@@ -27,14 +27,82 @@ class _responden_negaraState extends State<responden_negara> {
     super.initState();
   }
 
+  Future<dynamic> countcountryFR() async {
+    try {
+      var response = await dio.post(
+        "${url_domain}api/count_country",
+        queryParameters: {"Nationality": "France"},
+      );
+      var result = response.data;
+      return result;
+    } catch (e) {
+      print('error : ${e.toString()}');
+      rethrow;
+    }
+  }
+
   Future<dynamic> countcountryID() async {
     try {
-      Map<String, dynamic> requestData = {
-        // Tambahkan parameter yang diperlukan
-        'Nationality': 'Indonesia',
-      };
-      var response =
-          await dio.post("${url_domain}api/count_responden", data: requestData);
+      var response = await dio.post(
+        "${url_domain}api/count_country",
+        queryParameters: {"Nationality": "Indonesia"},
+      );
+      var result = response.data;
+      return result;
+    } catch (e) {
+      print('error : ${e.toString()}');
+      rethrow;
+    }
+  }
+
+  Future<dynamic> countcountryMX() async {
+    try {
+      var response = await dio.post(
+        "${url_domain}api/count_country",
+        queryParameters: {"Nationality": "Mexico"},
+      );
+      var result = response.data;
+      return result;
+    } catch (e) {
+      print('error : ${e.toString()}');
+      rethrow;
+    }
+  }
+
+  Future<dynamic> countcountrySD() async {
+    try {
+      var response = await dio.post(
+        "${url_domain}api/count_country",
+        queryParameters: {"Nationality": "Soudan"},
+      );
+      var result = response.data;
+      return result;
+    } catch (e) {
+      print('error : ${e.toString()}');
+      rethrow;
+    }
+  }
+
+  Future<dynamic> countcountrySA() async {
+    try {
+      var response = await dio.post(
+        "${url_domain}api/count_country",
+        queryParameters: {"Nationality": "South Africa"},
+      );
+      var result = response.data;
+      return result;
+    } catch (e) {
+      print('error : ${e.toString()}');
+      rethrow;
+    }
+  }
+
+  Future<dynamic> countcountryYMN() async {
+    try {
+      var response = await dio.post(
+        "${url_domain}api/count_country",
+        queryParameters: {"Nationality": "Yemen"},
+      );
       var result = response.data;
       return result;
     } catch (e) {
@@ -132,6 +200,39 @@ class _responden_negaraState extends State<responden_negara> {
                           Padding(
                             padding: const EdgeInsets.only(top: 20),
                             child: Text(
+                              "France",
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: FutureBuilder<dynamic>(
+                                  future: countcountryFR(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return Center(
+                                        child: Text(
+                                          snapshot.data[0].toString(),
+                                          style: TextStyle(
+                                            color: Colors.blue[800],
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 30,
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return const Center(
+                                        child: CircularProgressIndicator
+                                            .adaptive(),
+                                      );
+                                    }
+                                  })),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Text(
                               "Indonesia",
                               style: TextStyle(
                                 fontSize: 15,
@@ -139,9 +240,109 @@ class _responden_negaraState extends State<responden_negara> {
                               textAlign: TextAlign.center,
                             ),
                           ),
-                          Expanded(
+                          Padding(
+                              padding: const EdgeInsets.only(top: 20),
                               child: FutureBuilder<dynamic>(
                                   future: countcountryID(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return Center(
+                                        child: Text(
+                                          snapshot.data[0].toString(),
+                                          style: TextStyle(
+                                            color: Colors.blue[800],
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 30,
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return const Center(
+                                        child: CircularProgressIndicator
+                                            .adaptive(),
+                                      );
+                                    }
+                                  })),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Text(
+                              "Mexico",
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: FutureBuilder<dynamic>(
+                                  future: countcountryMX(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return Center(
+                                        child: Text(
+                                          snapshot.data[0].toString(),
+                                          style: TextStyle(
+                                            color: Colors.blue[800],
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 30,
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return const Center(
+                                        child: CircularProgressIndicator
+                                            .adaptive(),
+                                      );
+                                    }
+                                  })),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Text(
+                              "Soudan",
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: FutureBuilder<dynamic>(
+                                  future: countcountrySD(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return Center(
+                                        child: Text(
+                                          snapshot.data[0].toString(),
+                                          style: TextStyle(
+                                            color: Colors.blue[800],
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 30,
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return const Center(
+                                        child: CircularProgressIndicator
+                                            .adaptive(),
+                                      );
+                                    }
+                                  })),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Text(
+                              "Yemen",
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: FutureBuilder<dynamic>(
+                                  future: countcountryYMN(),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasData) {
                                       return Center(

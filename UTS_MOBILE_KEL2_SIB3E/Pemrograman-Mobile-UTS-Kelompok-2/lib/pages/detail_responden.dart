@@ -1,21 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
-abstract class detailresponden extends StatelessWidget {
-  final String data;
-  detailresponden({required this.data});
-}
-
 class detail_responden extends StatefulWidget {
   @override
   State<detail_responden> createState() => _detail_respondenState();
+}
+
+class DataItem {
+  final String age;
+  final String gpa;
+  final String year;
+  final String count;
+  final String gender;
+  final String nationality;
+  final String report;
+
+  DataItem({
+    required this.age,
+    required this.gpa,
+    required this.year,
+    required this.count,
+    required this.gender,
+    required this.nationality,
+    required this.report,
+  });
+
+  factory DataItem.fromJson(Map<String, dynamic> json) {
+    return DataItem(
+      age: json['age'].toString(),
+      gpa: json['gpa'].toString(),
+      year: json['year'].toString(),
+      count: json['count'].toString(),
+      gender: json['gender'].toString(),
+      nationality: json['nationality'].toString(),
+      report: json['report'].toString(),
+    );
+  }
 }
 
 class _detail_respondenState extends State<detail_responden> {
   final dio = Dio();
   List<Map<String, dynamic>> data = [];
 
-  String url_domain = "http://192.168.77.238:8000/";
+  String url_domain = "http://192.168.0.106:8000/";
 
   @override
   void initState() {
@@ -101,7 +128,7 @@ class _detail_respondenState extends State<detail_responden> {
                 child: Column(children: [
                   Container(
                     margin: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 20),
+                        vertical: 20, horizontal: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -109,7 +136,7 @@ class _detail_respondenState extends State<detail_responden> {
                           padding: const EdgeInsets.only(bottom: 20),
                           child: Text(
                             // ignore: prefer_interpolation_to_compose_strings
-                            "Detail Faktor ",
+                            "Detail Responden ",
                             style: TextStyle(
                               fontWeight: FontWeight.w900,
                               fontSize: 25,
@@ -118,16 +145,24 @@ class _detail_respondenState extends State<detail_responden> {
                           ),
                         ),
                         DataTable(
+                          columnSpacing: 16,
+                          dataRowMaxHeight: 150,
                           columns: const <DataColumn>[
                             DataColumn(
                               label: Text(
-                                'Baris',
+                                'Genre',
                                 style: TextStyle(fontStyle: FontStyle.italic),
                               ),
                             ),
                             DataColumn(
                               label: Text(
-                                'Nilai',
+                                'Reports',
+                                style: TextStyle(fontStyle: FontStyle.italic),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Text(
+                                'Gpa',
                                 style: TextStyle(fontStyle: FontStyle.italic),
                               ),
                             ),
@@ -136,8 +171,32 @@ class _detail_respondenState extends State<detail_responden> {
                           rows: data.map((rowData) {
                             return DataRow(
                               cells: <DataCell>[
-                                DataCell(Text(rowData['Baris'].toString())),
-                                DataCell(Text(rowData['Nilai'].toString())),
+                                DataCell(
+                                  Container(
+                                    width: 80, // Atur lebar sel
+                                    height: 200, // Atur tinggi sel
+                                    alignment: Alignment
+                                        .centerLeft, // Atur alignment teks dalam sel
+                                    child: Text(rowData['Genre'].toString()),
+                                  ), // Atur margin vertikal
+                                ),
+                                DataCell(
+                                  Container(
+                                    width: 180, // Atur lebar sel
+                                    height: 150, // Atur tinggi sel
+                                    alignment: Alignment
+                                        .centerLeft, // Atur alignment teks dalam sel
+                                    child: Text(rowData['Reports'].toString()),
+                                  ),
+                                ),
+                                DataCell(
+                                  Container(
+                                      width: 100, // Atur lebar sel
+                                      height: 40, // Atur tinggi sel
+                                      alignment: Alignment
+                                          .centerLeft, // Atur alignment teks dalam sel
+                                      child: Text(rowData['Gpa'].toString())),
+                                )
                               ],
                             );
                           }).toList(),
