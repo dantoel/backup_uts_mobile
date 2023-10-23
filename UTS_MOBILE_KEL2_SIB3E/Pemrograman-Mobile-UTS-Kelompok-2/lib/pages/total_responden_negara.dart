@@ -1,5 +1,11 @@
 import 'package:charts_flutter_new/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+
+class responden_negara extends StatefulWidget {
+  @override
+  State<responden_negara> createState() => _responden_negaraState();
+}
 
 class MyData {
   final String name;
@@ -8,7 +14,35 @@ class MyData {
   MyData(this.name, this.value);
 }
 
-class responden_negara extends StatelessWidget {
+class _responden_negaraState extends State<responden_negara> {
+  final dio = Dio();
+
+  String url_domain = "http://192.168.0.106:8000/";
+  // String url_count_responden = ;
+  // String url_create_data = "${url_domain}api/create_data";
+  // String url_show_data = "${url_domain}api/show_data";
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<dynamic> countcountryID() async {
+    try {
+      Map<String, dynamic> requestData = {
+        // Tambahkan parameter yang diperlukan
+        'Nationality': 'Indonesia',
+      };
+      var response =
+          await dio.post("${url_domain}api/count_responden", data: requestData);
+      var result = response.data;
+      return result;
+    } catch (e) {
+      print('error : ${e.toString()}');
+      rethrow;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var data = [
@@ -98,13 +132,35 @@ class responden_negara extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(top: 20),
                             child: Text(
-                              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+                              "Indonesia",
                               style: TextStyle(
                                 fontSize: 15,
                               ),
                               textAlign: TextAlign.center,
                             ),
                           ),
+                          Expanded(
+                              child: FutureBuilder<dynamic>(
+                                  future: countcountryID(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return Center(
+                                        child: Text(
+                                          snapshot.data[0].toString(),
+                                          style: TextStyle(
+                                            color: Colors.blue[800],
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 30,
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return const Center(
+                                        child: CircularProgressIndicator
+                                            .adaptive(),
+                                      );
+                                    }
+                                  }))
                         ],
                       ),
                     ),

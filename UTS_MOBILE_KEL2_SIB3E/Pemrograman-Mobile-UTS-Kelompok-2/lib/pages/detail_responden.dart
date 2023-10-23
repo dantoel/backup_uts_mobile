@@ -1,9 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 
-class detail_responden extends StatelessWidget {
+abstract class detailresponden extends StatelessWidget {
   final String data;
+  detailresponden({required this.data});
+}
 
-  detail_responden({required this.data});
+class detail_responden extends StatefulWidget {
+  @override
+  State<detail_responden> createState() => _detail_respondenState();
+}
+
+class _detail_respondenState extends State<detail_responden> {
+  final dio = Dio();
+  List<Map<String, dynamic>> data = [];
+
+  String url_domain = "http://192.168.77.238:8000/";
+
+  @override
+  void initState() {
+    super.initState();
+    show_all_data();
+  }
+
+  Future<dynamic> show_all_data() async {
+    try {
+      var response = await dio.post("${url_domain}api/all_data");
+      var result = response.data;
+      //return result;
+      if (result is List) {
+        data = List<Map<String, dynamic>>.from(result);
+        setState(() {});
+      }
+    } catch (e) {
+      print('error : ${e.toString()}');
+      rethrow;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,84 +98,50 @@ class detail_responden extends StatelessWidget {
             //=============== BODY ====================
             Expanded(
               child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 20),
-                            child: Text(
-                              "Detail Faktor " + data,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w900, fontSize: 25),
-                              textAlign: TextAlign.center,
+                child: Column(children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: Text(
+                            // ignore: prefer_interpolation_to_compose_strings
+                            "Detail Faktor ",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 25,
                             ),
+                            textAlign: TextAlign.center,
                           ),
-                          DataTable(
-                            columns: const <DataColumn>[
-                              DataColumn(
-                                label: Text(
-                                  'Baris',
-                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                ),
+                        ),
+                        DataTable(
+                          columns: const <DataColumn>[
+                            DataColumn(
+                              label: Text(
+                                'Baris',
+                                style: TextStyle(fontStyle: FontStyle.italic),
                               ),
-                              DataColumn(
-                                label: Text(
-                                  'Nilai',
-                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                ),
+                            ),
+                            DataColumn(
+                              label: Text(
+                                'Nilai',
+                                style: TextStyle(fontStyle: FontStyle.italic),
                               ),
-                            ],
-                            rows: const <DataRow>[
-                              DataRow(
-                                cells: <DataCell>[
-                                  DataCell(Text('Age')),
-                                  DataCell(Text('27')),
-                                ],
-                              ),
-                              DataRow(
-                                cells: <DataCell>[
-                                  DataCell(Text('Gpa')),
-                                  DataCell(Text('2,18')),
-                                ],
-                              ),
-                              DataRow(
-                                cells: <DataCell>[
-                                  DataCell(Text('Year')),
-                                  DataCell(Text('2')),
-                                ],
-                              ),
-                              DataRow(
-                                cells: <DataCell>[
-                                  DataCell(Text('Count')),
-                                  DataCell(Text('1')),
-                                ],
-                              ),
-                              DataRow(
-                                cells: <DataCell>[
-                                  DataCell(Text('Gender')),
-                                  DataCell(Text('M')),
-                                ],
-                              ),
-                              DataRow(
-                                cells: <DataCell>[
-                                  DataCell(Text('Nationality')),
-                                  DataCell(Text('Indonesia')),
-                                ],
-                              ),
-                              DataRow(
-                                cells: <DataCell>[
-                                  DataCell(Text('Report')),
-                                  DataCell(Text(
-                                      'The limited access to research databases and materials is causing a lot of frustration among students. We need better access to be able to succeed academically.')), // Ganti 'Flutter Mobile' dengan nilai yang sesuai
-                                ],
-                              ),
-                            ],
-                          )
+                            ),
+                          ],
+
+                          rows: data.map((rowData) {
+                            return DataRow(
+                              cells: <DataCell>[
+                                DataCell(Text(rowData['Baris'].toString())),
+                                DataCell(Text(rowData['Nilai'].toString())),
+                              ],
+                            );
+                          }).toList(),
+
                           // ==================== Card ====================
                           // for (var i = 0; i < dataList.length; i++)
                           //   DataTable(
@@ -214,38 +213,37 @@ class detail_responden extends StatelessWidget {
                           //       ),
                           //     ],
                           //   )
-                        ],
-                      ),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          margin: const EdgeInsets.all(20),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red[800],
+                              padding: EdgeInsets.all(15),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: Text(
+                              "Kembali",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ),
-
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.all(20),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red[800],
-                  padding: EdgeInsets.all(15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
                   ),
-                ),
-                child: Text(
-                  "Kembali",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
+                ]),
               ),
-            ),
+            )
           ],
         ),
       ),
