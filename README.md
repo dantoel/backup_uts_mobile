@@ -56,7 +56,7 @@ Dengan memenuhi requirement-fitur ini, aplikasi mobile akan memberikan akses yan
 ## 1. Flowchart
 ### a. Flowchart Perencanaan Pembuatan Aplikasi <br>
 <p align ="center">
-  <img src="image-2.png" alt="Alternative Text">
+  <img src="/flowchart 1.png" alt="Alternative Text">
 </p> <br>
 
 #### Penjelasan : <br>
@@ -77,7 +77,7 @@ Jika aplikasi sudah tidak perlu direvisi lagi, maka proses desain aplikasi mobil
 
 ### b. Flowchart Alur Kerja Sistem <br>
 <p align ="center">
-  <img src="image-3.png" alt="Alternative Text">
+  <img src="/flowchart 2.png" alt="Alternative Text">
 </p><br>
 
 #### Penjelasan : <br>
@@ -114,30 +114,30 @@ Berikut adalah halaman dashboard utama yang berasal dari hasil survey Responden.
     * Jumlah faktor yang dipermasalahkan (per faktor),jumlah responden berdasarkan gender dan jumlah responden berdasar negara asal : hasil akan muncul apabila user meng-klik menu tersebut, yang selanjutnya akan diarahkan pada halaman hasil dan visualisasi data yang berupa angka dan chart. 
     * lihat detail responden : hasil akan muncul apabila gender mengklik menu tersebut, yang selanjutnya akan diarahkan pada halaman yang menampilkan  data dari responden. <br>
 <p align ="center">
-  <img src="image-5.png" alt="Alternative Text">
+  <img src="/halaman_dashboard utama.jpg" alt="Alternative Text">
 </p><br>
 
 2. Tampilan Halaman Detail Chart<br>
 Berikut adalah output chart atau diagram dari :
     * Data jumlah faktor yang dipermasalahkan (per faktor) : hasil yang ditampilkan didapatkan dari mengambil setiap data dari count of genre x. <br>
 <div align="center">
-    <img src="image-6.png" alt="Alternative Text">
-    <img src="image-7.png" alt="Alternative Text">
+    <img src="/chart_genre.png" alt="Alternative Text">
+    <img src="/halaman_total faktor 2.jpg" alt="Alternative Text">
 </div>
     * Jumlah responden berdasarkan gender : hasil yang ditampilkan didapatkan dari data count of gender untuk Male dan Female.
 <div align="center">
-    <img src="image-8.png" alt="Alternative Text">
+    <img src="/halaman_gender.jpg" alt="Alternative Text">
 </div>
     * Jumlah responden berdasar negara asal : hasil yang ditampilkan didapatkan dari count of nasionality untuk setiap negara.<br>
 <div align="center">
-    <img src="image-9.png" alt="Alternative Text">
-    <img src="image-10.png" alt="Alternative Text">
+    <img src="/halaman_nasionality 1.jpg" alt="Alternative Text">
+    <img src="/halaman_nasionality 2.jpg" alt="Alternative Text">
 </div>
 <br>
 3. Tampilan Halaman Detail Responden<br>
 Berikut adalah halaman Detail responden yang berisi nama genre setiap faktor permasalahan, report yang dituliskan oleh responden, dan juga GPA dari responden yang mengisi survey.
 <div align="center">
-    <img src="image-11.png" alt="Alternative Text">
+    <img src="/halaman_detail responden.jpg" alt="Alternative Text">
 </div>
 <br>
 <br>
@@ -145,11 +145,11 @@ Berikut adalah halaman Detail responden yang berisi nama genre setiap faktor per
 # Daftar Kontributor
 ## Dokumentasi
 <div style="text-align:center;">
-    <img src="image-4.png" alt="Alt text" width="450px">
+    <img src="/dokumentasi_kelompok.jpg" alt="Alt text" width="450px">
 </div>
 <br>
 <div style="text-align: center;">
-    <img src="dokumentasi_rizqi zamzami.jpg" alt="Alt text" width="250px" height="350px">
+    <img src="/dokumentasi_rizqi zamzami.jpg" alt="Alt text" width="250px" height="350px">
 </div>
 
 
