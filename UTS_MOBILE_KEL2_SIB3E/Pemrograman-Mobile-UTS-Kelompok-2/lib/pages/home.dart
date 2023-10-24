@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
 import 'faktor_permasalahan.dart';
-import 'lihat_detail.dart';
 import 'total_responden_gender.dart';
 import 'total_responden_negara.dart';
 import 'detail_responden.dart';

@@ -18,9 +18,7 @@ class _total_responden_genderState extends State<total_responden_gender> {
   final dio = Dio();
 
   String url_domain = "http://192.168.0.106:8000/";
-  // String url_count_responden = ;
-  // String url_create_data = "${url_domain}api/create_data";
-  // String url_show_data = "${url_domain}api/show_data";
+
 
   @override
   void initState() {

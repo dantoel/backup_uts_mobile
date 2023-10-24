@@ -175,11 +175,17 @@ class _faktor_permasalahanState extends State<faktor_permasalahan> {
   }
 
   final List<ChartData> chartData = [
-    ChartData(1, 35),
-    ChartData(2, 23),
-    ChartData(3, 34),
-    ChartData(4, 25),
-    ChartData(5, 40)
+    ChartData(1, 236),
+    ChartData(2, 40),
+    ChartData(3, 85),
+    ChartData(4, 89),
+    ChartData(5, 91),
+    ChartData(6, 138),
+    ChartData(7, 53),
+    ChartData(8, 64),
+    ChartData(9, 86),
+    ChartData(10, 90),
+    ChartData(11, 33)
   ];
 
   @override

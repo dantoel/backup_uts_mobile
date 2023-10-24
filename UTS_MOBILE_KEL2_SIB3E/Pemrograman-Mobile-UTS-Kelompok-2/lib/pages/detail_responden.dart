@@ -6,38 +6,6 @@ class detail_responden extends StatefulWidget {
   State<detail_responden> createState() => _detail_respondenState();
 }
 
-class DataItem {
-  final String age;
-  final String gpa;
-  final String year;
-  final String count;
-  final String gender;
-  final String nationality;
-  final String report;
-
-  DataItem({
-    required this.age,
-    required this.gpa,
-    required this.year,
-    required this.count,
-    required this.gender,
-    required this.nationality,
-    required this.report,
-  });
-
-  factory DataItem.fromJson(Map<String, dynamic> json) {
-    return DataItem(
-      age: json['age'].toString(),
-      gpa: json['gpa'].toString(),
-      year: json['year'].toString(),
-      count: json['count'].toString(),
-      gender: json['gender'].toString(),
-      nationality: json['nationality'].toString(),
-      report: json['report'].toString(),
-    );
-  }
-}
-
 class _detail_respondenState extends State<detail_responden> {
   final dio = Dio();
   List<Map<String, dynamic>> data = [];
@@ -167,7 +135,6 @@ class _detail_respondenState extends State<detail_responden> {
                               ),
                             ),
                           ],
-
                           rows: data.map((rowData) {
                             return DataRow(
                               cells: <DataCell>[
@@ -200,78 +167,6 @@ class _detail_respondenState extends State<detail_responden> {
                               ],
                             );
                           }).toList(),
-
-                          // ==================== Card ====================
-                          // for (var i = 0; i < dataList.length; i++)
-                          //   DataTable(
-                          //     columns: const <DataColumn>[
-                          //       DataColumn(
-                          //         label: Text(
-                          //           'Nama Baris',
-                          //           style:
-                          //               TextStyle(fontStyle: FontStyle.italic),
-                          //         ),
-                          //       ),
-                          //       DataColumn(
-                          //         label: Text(
-                          //           'Nilai',
-                          //           style:
-                          //               TextStyle(fontStyle: FontStyle.italic),
-                          //         ),
-                          //       ),
-                          //     ],
-                          //     rows: const <DataRow>[
-                          //       DataRow(
-                          //         cells: <DataCell>[
-                          //           DataCell(Text('Age')),
-                          //           DataCell(Text(dataList[i]
-                          //               .age)), // Ganti dengan nilai yang sesuai
-                          //         ],
-                          //       ),
-                          //       DataRow(
-                          //         cells: <DataCell>[
-                          //           DataCell(Text('Gpa')),
-                          //           DataCell(Text(dataList[i]
-                          //               .gpa)), // Ganti dengan nilai yang sesuai
-                          //         ],
-                          //       ),
-                          //       DataRow(
-                          //         cells: <DataCell>[
-                          //           DataCell(Text('Year')),
-                          //           DataCell(Text(dataList[i]
-                          //               .year)), // Ganti dengan nilai yang sesuai
-                          //         ],
-                          //       ),
-                          //       DataRow(
-                          //         cells: <DataCell>[
-                          //           DataCell(Text('Count')),
-                          //           DataCell(Text(dataList[i]
-                          //               .count)), // Ganti dengan nilai yang sesuai
-                          //         ],
-                          //       ),
-                          //       DataRow(
-                          //         cells: <DataCell>[
-                          //           DataCell(Text('Gender')),
-                          //           DataCell(Text(dataList[i]
-                          //               .gender)), // Ganti dengan nilai yang sesuai
-                          //         ],
-                          //       ),
-                          //       DataRow(
-                          //         cells: <DataCell>[
-                          //           DataCell(Text('Nationality')),
-                          //           DataCell(Text(dataList[i]
-                          //               .nationality)), // Ganti dengan nilai yang sesuai
-                          //         ],
-                          //       ),
-                          //       DataRow(
-                          //         cells: <DataCell>[
-                          //           DataCell(Text('Report')),
-                          //           DataCell(Text(dataList[i]
-                          //               .report)), // Ganti dengan nilai yang sesuai
-                          //         ],
-                          //       ),
-                          //     ],
-                          //   )
                         ),
                         Container(
                           width: double.infinity,
