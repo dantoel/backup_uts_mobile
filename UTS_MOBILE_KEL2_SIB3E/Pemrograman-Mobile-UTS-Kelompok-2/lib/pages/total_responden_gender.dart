@@ -1,6 +1,7 @@
 import 'package:charts_flutter_new/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:pie_chart/pie_chart.dart';
 
 class total_responden_gender extends StatefulWidget {
   @override
@@ -16,9 +17,12 @@ class MyData {
 
 class _total_responden_genderState extends State<total_responden_gender> {
   final dio = Dio();
+  final Map<String, double> dataMap = {
+    'Male': 549,
+    'Female': 456,
+  };
 
-  String url_domain = "http://192.168.0.106:8000/";
-
+  String url_domain = "http://192.168.77.239:8000/";
 
   @override
   void initState() {
@@ -55,20 +59,33 @@ class _total_responden_genderState extends State<total_responden_gender> {
 
   @override
   Widget build(BuildContext context) {
-    var data = [
-      new MyData('Male', 456),
-      new MyData('Female', 549),
-    ];
+    // var data = [
+    //   new MyData('Male', 549),
+    //   new MyData('Female', 456),
+    // ];
 
-    var seriesList = [
-      new charts.Series<MyData, String>(
-        id: 'Values',
-        domainFn: (MyData data, _) => data.name,
-        measureFn: (MyData data, _) => data.value,
-        data: data,
-        labelAccessorFn: (MyData data, _) => '${data.name}: ${data.value}',
-      ),
-    ];
+    // int totalValue = data.map((item) => item.value).reduce((a, b) => a + b);
+
+    // var seriesList = [
+    //   new charts.Series<MyData, String>(
+    //     id: 'Values',
+    //     domainFn: (MyData data, _) => data.name,
+    //     measureFn: (MyData data, _) => data.value,
+    //     colorFn: (MyData data, _) {
+    //       if (data.name == 'Male') {
+    //         return charts.MaterialPalette.blue.shadeDefault;
+    //       } else {
+    //         return charts.MaterialPalette.red.shadeDefault;
+    //       }
+    //     },
+    //     data: data,
+
+    //     // labelAccessorFn: (MyData data, _) => '${data.name}: ${data.value}',
+    //     labelAccessorFn: (MyData data, _) =>
+    //         '${data.name}: ${((data.value / totalValue) * 100).toStringAsFixed(2)}%',
+    //   ),
+    // ];
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -111,8 +128,31 @@ class _total_responden_genderState extends State<total_responden_gender> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Center(
-                                            child: charts.PieChart(
-                                              seriesList,
+                                            child: PieChart(
+                                              dataMap: dataMap,
+                                              colorList: [
+                                                Colors.red,
+                                                Colors.blue
+                                              ],
+                                              animationDuration:
+                                                  Duration(milliseconds: 800),
+                                              chartLegendSpacing: 32,
+                                              chartRadius:
+                                                  MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      2.7,
+                                              chartValuesOptions:
+                                                  ChartValuesOptions(
+                                                showChartValueBackground: true,
+                                                showChartValuesInPercentage:
+                                                    true,
+                                                showChartValuesOutside: false,
+                                                chartValueStyle: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ),
