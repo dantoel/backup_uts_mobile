@@ -1,9 +1,7 @@
-import 'package:charts_flutter_new/flutter.dart' as charts;
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:survey_komplain/models/chart_data.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
-import 'package:dio/dio.dart';
 
 class faktor_permasalahan extends StatefulWidget {
   @override
@@ -13,7 +11,7 @@ class faktor_permasalahan extends StatefulWidget {
 final dio = Dio();
 
 class _faktor_permasalahanState extends State<faktor_permasalahan> {
-  String url_domain = "http://192.168.77.239:8000/";
+  String url_domain = "http://192.168.77.152:8000/";
 
   @override
   void initState() {

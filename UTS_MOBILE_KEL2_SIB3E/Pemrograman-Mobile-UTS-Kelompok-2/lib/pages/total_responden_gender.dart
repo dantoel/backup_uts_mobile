@@ -1,6 +1,5 @@
-import 'package:charts_flutter_new/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 class total_responden_gender extends StatefulWidget {
@@ -22,7 +21,7 @@ class _total_responden_genderState extends State<total_responden_gender> {
     'Female': 456,
   };
 
-  String url_domain = "http://192.168.77.239:8000/";
+  String url_domain = "http://192.168.77.152:8000/";
 
   @override
   void initState() {

@@ -1,12 +1,12 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
+import 'detail_responden.dart';
 import 'faktor_permasalahan.dart';
 import 'total_responden_gender.dart';
 import 'total_responden_negara.dart';
-import 'detail_responden.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final dio = Dio();
 
-  String url_domain = "http://192.168.77.239:8000/";
+  String url_domain = "http://192.168.77.152:8000/";
   // String url_count_responden = ;
   // String url_create_data = "${url_domain}api/create_data";
   // String url_show_data = "${url_domain}api/show_data";
