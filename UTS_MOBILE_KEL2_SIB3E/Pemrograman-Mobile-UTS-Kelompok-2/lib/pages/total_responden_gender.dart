@@ -21,7 +21,7 @@ class _total_responden_genderState extends State<total_responden_gender> {
     'Female': 456,
   };
 
-  String url_domain = "http://192.168.77.152:8000/";
+  String url_domain = "http://192.168.100.141:8000/";
 
   @override
   void initState() {
@@ -58,33 +58,6 @@ class _total_responden_genderState extends State<total_responden_gender> {
 
   @override
   Widget build(BuildContext context) {
-    // var data = [
-    //   new MyData('Male', 549),
-    //   new MyData('Female', 456),
-    // ];
-
-    // int totalValue = data.map((item) => item.value).reduce((a, b) => a + b);
-
-    // var seriesList = [
-    //   new charts.Series<MyData, String>(
-    //     id: 'Values',
-    //     domainFn: (MyData data, _) => data.name,
-    //     measureFn: (MyData data, _) => data.value,
-    //     colorFn: (MyData data, _) {
-    //       if (data.name == 'Male') {
-    //         return charts.MaterialPalette.blue.shadeDefault;
-    //       } else {
-    //         return charts.MaterialPalette.red.shadeDefault;
-    //       }
-    //     },
-    //     data: data,
-
-    //     // labelAccessorFn: (MyData data, _) => '${data.name}: ${data.value}',
-    //     labelAccessorFn: (MyData data, _) =>
-    //         '${data.name}: ${((data.value / totalValue) * 100).toStringAsFixed(2)}%',
-    //   ),
-    // ];
-
     return Scaffold(
       body: SafeArea(
         child: Column(

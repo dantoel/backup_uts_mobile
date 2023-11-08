@@ -17,7 +17,7 @@ class MyData {
 class _responden_negaraState extends State<responden_negara> {
   final dio = Dio();
 
-  String url_domain = "http://192.168.77.152:8000/";
+  String url_domain = "http://192.168.100.141:8000/";
   // String url_count_responden = ;
   // String url_create_data = "${url_domain}api/create_data";
   // String url_show_data = "${url_domain}api/show_data";

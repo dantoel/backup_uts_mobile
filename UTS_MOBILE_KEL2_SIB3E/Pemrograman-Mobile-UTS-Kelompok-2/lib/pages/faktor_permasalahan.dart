@@ -11,7 +11,7 @@ class faktor_permasalahan extends StatefulWidget {
 final dio = Dio();
 
 class _faktor_permasalahanState extends State<faktor_permasalahan> {
-  String url_domain = "http://192.168.77.152:8000/";
+  String url_domain = "http://192.168.100.141:8000/";
 
   @override
   void initState() {
