@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class detail_responden extends StatefulWidget {
   @override
@@ -10,7 +10,7 @@ class _detail_respondenState extends State<detail_responden> {
   final dio = Dio();
   List<Map<String, dynamic>> data = [];
 
-  String url_domain = "http://192.168.77.239:8000/";
+  String url_domain = "http://192.168.100.141:8000/";
 
   @override
   void initState() {

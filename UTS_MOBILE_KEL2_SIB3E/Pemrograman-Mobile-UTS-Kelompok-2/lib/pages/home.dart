@@ -1,12 +1,15 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:survey_komplain/controller/dbhelper.dart';
+import 'package:survey_komplain/models/item.dart';
 
+import 'detail_responden.dart';
 import 'faktor_permasalahan.dart';
+import 'form_tambah.dart';
 import 'total_responden_gender.dart';
 import 'total_responden_negara.dart';
-import 'detail_responden.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,17 +17,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final dio = Dio();
-
-  String url_domain = "http://192.168.77.239:8000/";
-  // String url_count_responden = ;
-  // String url_create_data = "${url_domain}api/create_data";
-  // String url_show_data = "${url_domain}api/show_data";
+  DbHelper dbHelper = DbHelper();
+  int count = 0;
+  List<Item> itemList = [];
 
   @override
   void initState() {
     super.initState();
   }
+
+  final dio = Dio();
+
+  String url_domain = "http://192.168.100.141:8000/";
+  // String url_count_responden = ;
+  // String url_create_data = "${url_domain}api/create_data";
+  // String url_show_data = "${url_domain}api/show_data";
 
   Future<dynamic> countRespondence() async {
     try {
@@ -57,6 +64,14 @@ class _HomePageState extends State<HomePage> {
       print('error : ${e.toString()}');
       rethrow;
     }
+  }
+
+  Future<Item> navigateToEntryForm(BuildContext context, Item item) async {
+    var result = await Navigator.push(context,
+        MaterialPageRoute(builder: (BuildContext context) {
+      return TambahFormPage(item);
+    }));
+    return result;
   }
 
   @override
@@ -109,6 +124,36 @@ class _HomePageState extends State<HomePage> {
                     child: Image.asset("assets/logo.png"),
                   ),
                 ),
+                Positioned(
+                    bottom: 20,
+                    right: 20,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        Item coba = Item('', '', 0, 0.0, 0, 0, '', '');
+                        coba.id = 0;
+                        var item = await navigateToEntryForm(context, coba);
+                        if (item != null) {
+                          //Insert
+                          int result = await dbHelper.insert(item);
+                          if (result > 0) {}
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue[800],
+                        padding: const EdgeInsets.all(10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Text(
+                        "Tambah Data",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ))
               ],
             ),
             //=============== BODY ====================
@@ -123,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Padding(
-                            padding: EdgeInsets.only(bottom: 20),
+                            padding: EdgeInsets.only(bottom: 40),
                             child: Text(
                               "Hasil Survey dari Responden : ",
                               style: TextStyle(fontWeight: FontWeight.w900),
