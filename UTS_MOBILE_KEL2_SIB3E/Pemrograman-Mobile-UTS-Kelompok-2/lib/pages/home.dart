@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
 
   final dio = Dio();
 
-  String url_domain = "http://192.168.100.141:8000/";
+  String url_domain = "http://192.168.0.110:8000/";
   // String url_count_responden = ;
   // String url_create_data = "${url_domain}api/create_data";
   // String url_show_data = "${url_domain}api/show_data";
@@ -66,10 +66,10 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<Item> navigateToEntryForm(BuildContext context, Item item) async {
+  Future<Item> navigateToEntryForm(BuildContext context) async {
     var result = await Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) {
-      return TambahFormPage(item);
+      return TambahFormPage();
     }));
     return result;
   }
@@ -129,14 +129,14 @@ class _HomePageState extends State<HomePage> {
                     right: 20,
                     child: ElevatedButton(
                       onPressed: () async {
-                        Item coba = Item('', '', 0, 0.0, 0, 0, '', '');
-                        coba.id = 0;
-                        var item = await navigateToEntryForm(context, coba);
-                        if (item != null) {
+                        //Item coba = Item('', '', 0, 0.0, 0, 0, '', '');
+                        //coba.id = 0;
+                        var data = await navigateToEntryForm(context);
+                        /*if (data != null) {
                           //Insert
-                          int result = await dbHelper.insert(item);
+                          int result = await postData(data);
                           if (result > 0) {}
-                        }
+                        }*/
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue[800],

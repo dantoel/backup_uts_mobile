@@ -5,18 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:survey_komplain/models/item.dart';
 
 class TambahFormPage extends StatefulWidget {
-  final Item item;
-  TambahFormPage(this.item);
+  //final Item item;
+  //TambahFormPage(this.item);
 
   @override
-  TambahFormPageState createState() => TambahFormPageState(this.item);
+  TambahFormPageState createState() => TambahFormPageState();
 }
 
 class TambahFormPageState extends State<TambahFormPage> {
-  Item item;
-  TambahFormPageState(this.item);
+  //Item item;
+  //TambahFormPageState(this.item);
+  final dio = Dio();
+  String url_domain = "http://192.168.0.110:8000";
 
   final _formKey = GlobalKey<FormState>();
+  int _id = 2000;
   String _genre = '';
   String _gender = '';
   int _age = 0;
@@ -35,9 +38,6 @@ class TambahFormPageState extends State<TambahFormPage> {
   TextEditingController nationalityCont = TextEditingController();
   TextEditingController reportCont = TextEditingController();
 
-  final dio = Dio();
-
-  String url_domain = "http://192.168.100.141:8000/";
   // String url_count_responden = ;
   // String url_create_data = "${url_domain}api/create_data";
   // String url_show_data = "${url_domain}api/show_data";
@@ -47,18 +47,60 @@ class TambahFormPageState extends State<TambahFormPage> {
     super.initState();
   }
 
+  Future<void> postData() async {
+    try {
+      Response response = await dio.post(
+        '$url_domain/api/create_data',
+        data: {
+          'Genre': _genre,
+          'Reports': _report,
+          'Age': _age,
+          'Gpa': _gpa,
+          'Year': _year,
+          'Count': _count,
+          'Gender': _gender,
+          'Nationality': _nationality,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Berhasil menyimpan data'),
+          ),
+        );
+        // Reset form
+        _formKey.currentState!.reset();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Gagal menyimpan data'),
+          ),
+        );
+      }
+    } catch (e) {
+      print('Terjadi kesalahan: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Terjadi kesalahan: $e'),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (item != null) {
-      genreCont.text = item.genre;
-      ageCont.text = item.age.toString();
-      genderCont.text = item.gender;
-      gpaCont.text = item.gpa.toString();
-      yearCont.text = item.year.toString();
-      countCont.text = item.count.toString();
-      nationalityCont.text = item.nationality;
-      reportCont.text = item.report;
-    }
+    /*if (item != null) {
+        genreCont.text = item.genre;
+        ageCont.text = item.age.toString();
+        genderCont.text = item.gender;
+        gpaCont.text = item.gpa.toString();
+        yearCont.text = item.year.toString();
+        countCont.text = item.count.toString();
+        nationalityCont.text = item.nationality;
+        reportCont.text = item.report;
+      }
+      */
     return Scaffold(
       appBar: AppBar(
         title: Text('Tambah Data'),
@@ -138,9 +180,12 @@ class TambahFormPageState extends State<TambahFormPage> {
                           ),
                           keyboardType: TextInputType.number,
                           onChanged: (value) {
-                            setState(() {
-                              _age = int.parse(value);
-                            });
+                            int? parsedAge = int.tryParse(value);
+                            if (parsedAge != null) {
+                              setState(() {
+                                _age = parsedAge;
+                              });
+                            }
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -205,10 +250,25 @@ class TambahFormPageState extends State<TambahFormPage> {
                         ),
                         keyboardType: TextInputType.number,
                         onChanged: (value) {
-                          setState(() {
-                            _gpa = double.parse(value);
-                          });
+                          double? parsedGpa = double.tryParse(value);
+                          if (parsedGpa != null) {
+                            setState(() {
+                              _gpa = parsedGpa;
+                            });
+                          }
                         },
+
+                        /* 
+                        keyboardType: TextInputType.number,
+                          onChanged: (value) {
+                            int? parsedAge = int.tryParse(value);
+                            if (parsedAge != null) {
+                              setState(() {
+                                _age = parsedAge;
+                              });
+                            }
+                          },
+                          */
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your GPA';
@@ -265,10 +325,24 @@ class TambahFormPageState extends State<TambahFormPage> {
                     ),
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
-                      setState(() {
-                        _count = int.parse(value);
-                      });
+                      int? parsedCount = int.tryParse(value);
+                      if (parsedCount != null) {
+                        setState(() {
+                          _count = parsedCount;
+                        });
+                      }
                     },
+                    /*
+                    keyboardType: TextInputType.number,
+                          onChanged: (value) {
+                            int? parsedAge = int.tryParse(value);
+                            if (parsedAge != null) {
+                              setState(() {
+                                _age = parsedAge;
+                              });
+                            }
+                          },
+                          */
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter the count';
@@ -362,34 +436,13 @@ class TambahFormPageState extends State<TambahFormPage> {
                                 TextButton(
                                   child: Text('Ya'),
                                   onPressed: () {
-                                    if (item == null) {
-                                      // tambah data
-                                      item = Item(
-                                          genreCont.text,
-                                          genderCont.text,
-                                          int.parse(ageCont.text),
-                                          double.parse(gpaCont.text),
-                                          int.parse(yearCont.text),
-                                          int.parse(countCont.text),
-                                          nationalityCont.text,
-                                          reportCont.text);
-                                    } else {
-                                      // ubah data
-                                      item.genre = genreCont.text;
-                                      item.gender = genderCont.text;
-                                      item.age = int.parse(ageCont.text);
-                                      item.gpa = double.parse(gpaCont.text);
-                                      item.year = int.parse(yearCont.text);
-                                      item.count = int.parse(countCont.text);
-                                      item.nationality = nationalityCont.text;
-                                      item.report = reportCont.text;
-                                    }
+                                    postData();
 
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           content: Text('Processing Data')),
                                     );
-                                    Navigator.pop(context, item);
+                                    Navigator.pop(context);
                                   },
                                 ),
                               ],
