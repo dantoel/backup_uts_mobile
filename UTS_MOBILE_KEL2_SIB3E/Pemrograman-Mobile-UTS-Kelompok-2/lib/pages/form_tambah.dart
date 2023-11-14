@@ -2,7 +2,6 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:survey_komplain/models/item.dart';
 
 class TambahFormPage extends StatefulWidget {
   //final Item item;
@@ -16,7 +15,7 @@ class TambahFormPageState extends State<TambahFormPage> {
   //Item item;
   //TambahFormPageState(this.item);
   final dio = Dio();
-  String url_domain = "http://192.168.0.110:8000";
+  String url_domain = "http://192.168.77.206:8000";
 
   final _formKey = GlobalKey<FormState>();
   int _id = 2000;

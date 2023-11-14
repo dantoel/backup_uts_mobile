@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
 
   final dio = Dio();
 
-  String url_domain = "http://192.168.0.110:8000/";
+  String url_domain = "http://192.168.77.206:8000/";
   // String url_count_responden = ;
   // String url_create_data = "${url_domain}api/create_data";
   // String url_show_data = "${url_domain}api/show_data";
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<Item> navigateToEntryForm(BuildContext context) async {
+  Future<Item?> navigateToEntryForm(BuildContext context) async {
     var result = await Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) {
       return TambahFormPage();
