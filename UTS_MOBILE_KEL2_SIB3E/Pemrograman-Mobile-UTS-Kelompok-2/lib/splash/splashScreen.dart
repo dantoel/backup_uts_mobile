@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:survey_komplain/pages/home.dart';
+import 'package:survey_komplain/pages/login/login.dart';
+import 'package:survey_komplain/pages/login/register.dart';
 
 class splash extends StatefulWidget {
   const splash({super.key});
@@ -11,16 +12,24 @@ class splash extends StatefulWidget {
   State<splash> createState() => _splashState();
 }
 
-class _splashState extends State<splash> {
+class _splashState extends State<splash> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (_) => HomePage(),
-      ));
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) {
+            if (true) {
+              return RegisterPage();
+            } else {
+              return LoginPage();
+            }
+          },
+        ),
+      );
     });
   }
 
