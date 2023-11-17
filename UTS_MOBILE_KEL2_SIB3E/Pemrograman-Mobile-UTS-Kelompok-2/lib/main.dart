@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:survey_komplain/pages/home.dart';
 
-import 'pages/home.dart';
-
-void main() {
+Future<void> main() async {
   runApp(MyApp());
 }
 

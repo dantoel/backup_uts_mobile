@@ -8,6 +8,7 @@ import 'package:survey_komplain/models/item.dart';
 import 'detail_responden.dart';
 import 'faktor_permasalahan.dart';
 import 'form_tambah.dart';
+import 'laporan_kekerasan/form_laporan.dart';
 import 'total_responden_gender.dart';
 import 'total_responden_negara.dart';
 
@@ -24,11 +25,55 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      _showReportDialog();
+    });
+  }
+
+  Future<void> _showReportDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Image.asset(
+                  "assets/no_harashment.png",
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.contain,
+                ),
+                Text(
+                  "Apakah kamu pernah mengalami atau mengetahui kejadian kekerasan seksual?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () async {
+                    var data = await navigateToEntryFormKekerasan(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary:
+                        Colors.red[700], // Ganti dengan warna yang diinginkan
+                  ),
+                  child: Text("Laporkan"),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   final dio = Dio();
 
-  String url_domain = "http://192.168.0.110:8000/";
+  String url_domain = "http://192.168.1.17:8000/";
   // String url_count_responden = ;
   // String url_create_data = "${url_domain}api/create_data";
   // String url_show_data = "${url_domain}api/show_data";
@@ -66,10 +111,18 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<Item> navigateToEntryForm(BuildContext context) async {
+  Future<Item?> navigateToEntryForm(BuildContext context) async {
     var result = await Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) {
       return TambahFormPage();
+    }));
+    return result;
+  }
+
+  Future<Item?> navigateToEntryFormKekerasan(BuildContext context) async {
+    var result = await Navigator.push(context,
+        MaterialPageRoute(builder: (BuildContext context) {
+      return FormLaporan();
     }));
     return result;
   }
