@@ -11,6 +11,7 @@ import 'form_tambah.dart';
 import 'laporan_kekerasan/form_laporan.dart';
 import 'total_responden_gender.dart';
 import 'total_responden_negara.dart';
+import 'detail_kekerasan.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -73,7 +74,7 @@ class _HomePageState extends State<HomePage> {
 
   final dio = Dio();
 
-  String url_domain = "http://192.168.1.17:8000/";
+  String url_domain = "http://192.168.0.119:8000/";
   // String url_count_responden = ;
   // String url_create_data = "${url_domain}api/create_data";
   // String url_show_data = "${url_domain}api/show_data";
@@ -182,15 +183,45 @@ class _HomePageState extends State<HomePage> {
                     right: 20,
                     child: ElevatedButton(
                       onPressed: () async {
-                        //Item coba = Item('', '', 0, 0.0, 0, 0, '', '');
-                        //coba.id = 0;
-                        var data = await navigateToEntryForm(context);
-                        /*if (data != null) {
-                          //Insert
-                          int result = await postData(data);
-                          if (result > 0) {}
-                        }*/
+                        return showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Pilih Form'),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: <Widget>[
+                                    SizedBox(height: 16),
+                                    ElevatedButton(
+                                      onPressed: () async {
+                                        var data =
+                                            await navigateToEntryFormKekerasan(
+                                                context);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.red[700],
+                                      ),
+                                      child: Text("Tambah Laporan Kekerasan"),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () async {
+                                        var data =
+                                            await navigateToEntryForm(context);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.red[700],
+                                      ),
+                                      child: Text("Tambah Laporan Survey"),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
                       },
+
+//Ganti bagian onPressed yang button "Tambah Data" (biru atas)
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue[800],
                         padding: const EdgeInsets.all(10),
@@ -538,12 +569,56 @@ class _HomePageState extends State<HomePage> {
               width: double.infinity,
               margin: const EdgeInsets.all(20),
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
+                onPressed: () async {
+                  return showDialog<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Pilih Form'),
+                        content: SingleChildScrollView(
+                          child: ListBody(
+                            children: <Widget>[
+                              SizedBox(height: 16),
+                              ElevatedButton(
+                                onPressed: () async {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            detail_kekerasan()),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.red[700],
+                                ),
+                                child: Text("Lihat Laporan Kekerasan"),
+                              ),
+                              ElevatedButton(
+                                onPressed: () async {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            detail_responden()),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.red[700],
+                                ),
+                                child: Text("Lihat Laporan Survey"),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+                /*Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => detail_responden()),
                   );
-                },
+                },*/
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red[800],
                   padding: const EdgeInsets.all(15),
@@ -552,7 +627,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 child: const Text(
-                  "Lihat Detail Responden",
+                  "Lihat Hasil Responden",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-// import 'package:file_picker/file_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 class FormLaporan extends StatefulWidget {
@@ -13,31 +13,8 @@ class FormLaporan extends StatefulWidget {
 class FormLaporanState extends State<FormLaporan> {
   late String _filePath; // Menyimpan path file yang dipilih
 
-// Widget upload file
-  // Widget _buildFilePicker() {
-  //   return TextFormField(
-  //     decoration: InputDecoration(
-  //       labelText: 'Pilih File',
-  //       prefixIcon: Icon(Icons.file_upload),
-  //       border: OutlineInputBorder(
-  //         borderRadius: BorderRadius.circular(5.0),
-  //       ),
-  //     ),
-  //     readOnly: true,
-  //     onTap: () async {
-  //       FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-  //       if (result != null) {
-  //         setState(() {
-  //           _filePath = result.files.single.path!;
-  //         });
-  //       }
-  //     },
-  //   );
-  // }
-
   final dio = Dio();
-  String url_domain = "http://192.168.1.17:8000";
+  String url_domain = "http://192.168.43.8:8000";
 
   final _formKey = GlobalKey<FormState>();
 
@@ -61,10 +38,14 @@ class FormLaporanState extends State<FormLaporan> {
   Future<void> postData() async {
     try {
       Response response = await dio.post(
-        '$url_domain/api/create_data',
+        '$url_domain/api/lapor_kekerasan',
         data: {
-          'Jenis': _Jenis,
-          'Reports': _report,
+          'nim': _nim,
+          'nama': _nama,
+          'telepon': _telepon,
+          'jenis': _Jenis,
+          'report': _report,
+          'filepath': _filePath,
         },
       );
 
@@ -271,6 +252,29 @@ class FormLaporanState extends State<FormLaporan> {
                     },
                   ),
                 ),
+                // Widget upload file
+                Padding(
+                    padding: EdgeInsets.only(top: 20),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Pilih File',
+                        prefixIcon: Icon(Icons.file_upload),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                      ),
+                      readOnly: true,
+                      onTap: () async {
+                        FilePickerResult? result =
+                            await FilePicker.platform.pickFiles();
+                        if (result != null) {
+                          setState(() {
+                            _filePath = result.files.single.path!;
+                          });
+                        }
+                      },
+                    )),
+
                 Container(
                   padding: EdgeInsets.only(top: 20),
                   width: double.infinity,

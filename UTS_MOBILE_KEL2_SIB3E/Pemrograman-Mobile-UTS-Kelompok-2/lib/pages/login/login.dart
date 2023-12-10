@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:survey_komplain/pages/home.dart';
 import 'package:survey_komplain/pages/login/register.dart';
+import 'package:dio/dio.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -10,10 +11,80 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
+final dio = Dio();
+String url_domain = "http://192.168.0.119:8000";
+
+String _nim = '';
+String _password = '';
+
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _nimController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  Future<void> login() async {
+    try {
+      Response response = await dio.post(
+        '$url_domain/api/login_mhs',
+        data: {
+          'nim': _nim,
+          'password': _password,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        //Map<String, dynamic> responseData = response.data;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Berhasil Login'),
+          ),
+        );
+
+        // Reset form or any other actions upon successful login
+        _formKey.currentState!.reset();
+
+        // You can use the response data to make further decisions
+        // For example, check if the response contains a token or user information
+        // and store it in a global state for future use
+
+        // Navigate to the HomePage
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => HomePage(),
+          ),
+        );
+      } else if (response.statusCode == 404) {
+        //Map<String, dynamic> responseData = response.data;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('NIM Tidak Ditemukan'),
+          ),
+        );
+      } else if (response.statusCode == 401) {
+        //Map<String, dynamic> responseData = response.data;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Password Salah / Status Mahasiswa Tidak Lulus'),
+          ),
+        );
+      } else {
+        // Handle other status codes
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Gagal login. Silakan coba lagi.'),
+          ),
+        );
+      }
+    } catch (e) {
+      print('Terjadi kesalahan: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Terjadi kesalahan. Silakan coba lagi.'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +178,12 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                           labelText: "NIM",
                         ),
+                        keyboardType: TextInputType.multiline,
+                        onChanged: (value) {
+                          setState(() {
+                            _nim = value;
+                          });
+                        },
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter your NIM';
@@ -121,6 +198,12 @@ class _LoginPageState extends State<LoginPage> {
                           labelText: "Password",
                         ),
                         obscureText: true,
+                        keyboardType: TextInputType.multiline,
+                        onChanged: (value) {
+                          setState(() {
+                            _password = value;
+                          });
+                        },
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter a password';
@@ -132,15 +215,24 @@ class _LoginPageState extends State<LoginPage> {
                       Container(
                         margin: EdgeInsets.only(top: 20),
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            // Validate the form first
                             if (_formKey.currentState?.validate() ?? false) {
-                              // TODO: Process login
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => HomePage(),
-                                ),
-                              );
+                              try {
+                                // Call the login method
+                                await login();
+
+                                // If login is successful, navigate to the HomePage
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => HomePage(),
+                                  ),
+                                );
+                              } catch (error) {
+                                print('Error: $error');
+                                // Handle login error if needed
+                              }
                             }
                           },
                           style: ElevatedButton.styleFrom(
