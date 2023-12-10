@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-// import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 class FormLaporan extends StatefulWidget {
@@ -37,7 +36,7 @@ class FormLaporanState extends State<FormLaporan> {
   // }
 
   final dio = Dio();
-  String url_domain = "http://192.168.1.17:8000";
+  String url_domain = "http://192.168.1.6:8000";
 
   final _formKey = GlobalKey<FormState>();
 

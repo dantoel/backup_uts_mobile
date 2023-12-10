@@ -15,7 +15,7 @@ class TambahFormPageState extends State<TambahFormPage> {
   //Item item;
   //TambahFormPageState(this.item);
   final dio = Dio();
-  String url_domain = "http://192.168.1.17:8000";
+  String url_domain = "http://192.168.1.6:8000";
 
   final _formKey = GlobalKey<FormState>();
   int _id = 2000;

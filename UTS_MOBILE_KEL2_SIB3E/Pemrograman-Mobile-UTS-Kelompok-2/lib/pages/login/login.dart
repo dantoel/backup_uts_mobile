@@ -134,7 +134,6 @@ class _LoginPageState extends State<LoginPage> {
                         child: ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState?.validate() ?? false) {
-                              // TODO: Process login
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

@@ -23,9 +23,9 @@ class _splashState extends State<splash> with SingleTickerProviderStateMixin {
         MaterialPageRoute(
           builder: (_) {
             if (true) {
-              return RegisterPage();
-            } else {
               return LoginPage();
+            } else {
+              return const RegisterPage();
             }
           },
         ),
