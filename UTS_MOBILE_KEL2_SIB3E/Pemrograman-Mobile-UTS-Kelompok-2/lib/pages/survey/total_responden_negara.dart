@@ -17,7 +17,7 @@ class MyData {
 class _responden_negaraState extends State<responden_negara> {
   final dio = Dio();
 
-  String url_domain = "http://192.168.1.6:8000/";
+  String url_domain = "http://192.168.1.18:8000";
   // String url_count_responden = ;
   // String url_create_data = "${url_domain}api/create_data";
   // String url_show_data = "${url_domain}api/show_data";
@@ -30,7 +30,7 @@ class _responden_negaraState extends State<responden_negara> {
   Future<dynamic> countcountryFR() async {
     try {
       var response = await dio.post(
-        "${url_domain}api/count_country",
+        "${url_domain}/api/count_country",
         queryParameters: {"Nationality": "France"},
       );
       var result = response.data;

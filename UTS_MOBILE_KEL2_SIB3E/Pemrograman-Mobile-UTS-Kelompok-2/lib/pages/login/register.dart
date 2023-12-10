@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:survey_komplain/pages/login/login.dart';
@@ -11,6 +12,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
+
   final _nimController = TextEditingController();
   final _namaController = TextEditingController();
   final _nomorTeleponController = TextEditingController();
@@ -21,6 +23,53 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   void initState() {
     super.initState();
+  }
+
+  final dio = Dio();
+  String url_domain = "http://192.168.1.18:8000";
+
+  int _nim = 0;
+  String _nama = '';
+  int _telepon = 0;
+  String _email = '';
+  String _password = '';
+
+  Future<void> register() async {
+    try {
+      Response response = await dio.post(
+        '$url_domain/api/register',
+        data: {
+          'nim': _nim,
+          'nama': _nama,
+          'nomor_telepon': _telepon,
+          'email': _email,
+          'password': _password,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Berhasil menyimpan data'),
+          ),
+        );
+        // Reset form
+        _formKey.currentState!.reset();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Gagal menyimpan data'),
+          ),
+        );
+      }
+    } catch (e) {
+      print('Terjadi kesalahan: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Terjadi kesalahan: $e'),
+        ),
+      );
+    }
   }
 
   @override
@@ -111,48 +160,78 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
 
                       TextFormField(
-                        controller: _nimController,
+                        //controller: _nimController,
                         decoration: InputDecoration(
                           labelText: "Masukkan NIM",
                         ),
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          int? parsednim = int.tryParse(value);
+                          if (parsednim != null) {
+                            setState(() {
+                              _nim = parsednim;
+                            });
+                          }
+                        },
                         validator: (value) {
-                          if (value!.isEmpty) {
+                          if (value == null || value.isEmpty) {
                             return 'Please enter your NIM';
                           }
                           return null;
                         },
                       ),
                       TextFormField(
-                        controller: _namaController,
+                        //controller: _namaController,
                         decoration: InputDecoration(
                           labelText: "Masukkan Nama",
                         ),
+                        keyboardType: TextInputType.multiline,
+                        onChanged: (value) {
+                          setState(() {
+                            _nama = value;
+                          });
+                        },
                         validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your name';
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter the your name';
                           }
                           return null;
                         },
                       ),
                       TextFormField(
-                        controller: _nomorTeleponController,
+                        //controller: _nomorTeleponController,
                         decoration: InputDecoration(
                           labelText: "Masukkan Nomor Telepon",
                         ),
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          int? parsedtelepon = int.tryParse(value);
+                          if (parsedtelepon != null) {
+                            setState(() {
+                              _telepon = parsedtelepon;
+                            });
+                          }
+                        },
                         validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your phone number';
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter the telepon number';
                           }
                           return null;
                         },
                       ),
                       TextFormField(
-                        controller: _emailController,
+                        //controller: _emailController,
                         decoration: InputDecoration(
                           labelText: "Masukkan E-mail",
                         ),
+                        keyboardType: TextInputType.multiline,
+                        onChanged: (value) {
+                          setState(() {
+                            _email = value;
+                          });
+                        },
                         validator: (value) {
-                          if (value!.isEmpty) {
+                          if (value == null || value.isEmpty) {
                             return 'Please enter your email';
                           } else if (!value.contains('@')) {
                             return 'Please enter a valid email address';
@@ -165,40 +244,49 @@ class _RegisterPageState extends State<RegisterPage> {
                         decoration: InputDecoration(
                           labelText: "Password",
                         ),
+                        keyboardType: TextInputType.multiline,
                         obscureText: true,
+                        onChanged: (value) {
+                          setState(() {
+                            _password = value;
+                          });
+                        },
                         validator: (value) {
-                          if (value!.isEmpty) {
+                          if (value == null || value.isEmpty) {
                             return 'Please enter a password';
                           }
                           return null;
                         },
                       ),
+                      /*
                       TextFormField(
-                        controller: _confirmPasswordController,
+                        //controller: _confirmPasswordController,
                         decoration: InputDecoration(
                           labelText: "Confirm Password",
                         ),
+                        keyboardType: TextInputType.multiline,
                         obscureText: true,
+                        onChanged: (value) {
+                          setState(() {
+                            _password = value;
+                          });
+                        },
                         validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please confirm your password';
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a password';
                           } else if (value != _passwordController.text) {
                             return 'Passwords do not match';
                           }
                           return null;
                         },
-                      ),
+                      ), */
                       Container(
                         margin: EdgeInsets.only(top: 20),
                         child: ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState?.validate() ?? false) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => LoginPage(),
-                                ),
-                              );
+                              // TODO: Process registration
+                              register();
                             }
                           },
                           style: ElevatedButton.styleFrom(

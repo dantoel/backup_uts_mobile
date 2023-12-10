@@ -11,7 +11,7 @@ class faktor_permasalahan extends StatefulWidget {
 final dio = Dio();
 
 class _faktor_permasalahanState extends State<faktor_permasalahan> {
-  String url_domain = "http://192.168.1.6:8000/";
+  String url_domain = "http://192.168.1.18:8000";
 
   @override
   void initState() {
@@ -21,7 +21,7 @@ class _faktor_permasalahanState extends State<faktor_permasalahan> {
   Future<dynamic> countGenreAcademic() async {
     try {
       var response = await dio.post(
-        "${url_domain}api/count_genre",
+        "${url_domain}/api/count_genre",
         queryParameters: {"Genre": "Academic Support and Resources"},
       );
       var result = response.data;

@@ -21,7 +21,7 @@ class _total_responden_genderState extends State<total_responden_gender> {
     'Female': 456,
   };
 
-  String url_domain = "http://192.168.1.6:8000/";
+  String url_domain = "http://192.168.1.18:8000";
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _total_responden_genderState extends State<total_responden_gender> {
   Future<dynamic> count_genderM() async {
     try {
       var response = await dio.post(
-        "${url_domain}api/count_gender",
+        "${url_domain}/api/count_gender",
         queryParameters: {"Gender": "M"},
       );
       var result = response.data;

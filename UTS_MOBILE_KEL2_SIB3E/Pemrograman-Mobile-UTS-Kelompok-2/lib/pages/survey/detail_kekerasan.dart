@@ -1,26 +1,26 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class detail_responden extends StatefulWidget {
+class detail_kekerasan extends StatefulWidget {
   @override
-  State<detail_responden> createState() => _detail_respondenState();
+  State<detail_kekerasan> createState() => _detail_kekerasanState();
 }
 
-class _detail_respondenState extends State<detail_responden> {
+class _detail_kekerasanState extends State<detail_kekerasan> {
   final dio = Dio();
   List<Map<String, dynamic>> data = [];
 
-  String url_domain = "http://192.168.1.6:8000/";
+  String url_domain = "http://192.168.1.18:8000";
 
   @override
   void initState() {
     super.initState();
-    show_all_data();
+    data_kekerasan();
   }
 
-  Future<dynamic> show_all_data() async {
+  Future<dynamic> data_kekerasan() async {
     try {
-      var response = await dio.post("${url_domain}api/all_data");
+      var response = await dio.post("${url_domain}/api/detail_kekerasan");
       var result = response.data;
       //return result;
       if (result is List) {
@@ -104,7 +104,7 @@ class _detail_respondenState extends State<detail_responden> {
                           padding: const EdgeInsets.only(bottom: 20),
                           child: Text(
                             // ignore: prefer_interpolation_to_compose_strings
-                            "Detail Responden ",
+                            "Laporan Hasil Kekerasan ",
                             style: TextStyle(
                               fontWeight: FontWeight.w900,
                               fontSize: 25,
@@ -113,25 +113,22 @@ class _detail_respondenState extends State<detail_responden> {
                           ),
                         ),
                         DataTable(
-                          columnSpacing: 16,
-                          dataRowMaxHeight: 150,
+                          columnSpacing: 12,
+                          dataRowMaxHeight: 70,
                           columns: const <DataColumn>[
                             DataColumn(
                               label: Text(
-                                'Genre',
-                                style: TextStyle(fontStyle: FontStyle.italic),
+                                'Nama',
                               ),
                             ),
                             DataColumn(
                               label: Text(
-                                'Reports',
-                                style: TextStyle(fontStyle: FontStyle.italic),
+                                'Jenis laporan',
                               ),
                             ),
                             DataColumn(
                               label: Text(
-                                'Gpa',
-                                style: TextStyle(fontStyle: FontStyle.italic),
+                                'Isi Laporan',
                               ),
                             ),
                           ],
@@ -141,28 +138,29 @@ class _detail_respondenState extends State<detail_responden> {
                                 DataCell(
                                   Container(
                                     width: 80, // Atur lebar sel
-                                    height: 200, // Atur tinggi sel
+                                    height: 80, // Atur tinggi sel
                                     alignment: Alignment
                                         .centerLeft, // Atur alignment teks dalam sel
-                                    child: Text(rowData['Genre'].toString()),
+                                    child: Text(rowData['nama'].toString()),
                                   ), // Atur margin vertikal
                                 ),
                                 DataCell(
                                   Container(
-                                    width: 180, // Atur lebar sel
-                                    height: 150, // Atur tinggi sel
+                                    width: 70, // Atur lebar sel
+                                    height: 50, // Atur tinggi sel
                                     alignment: Alignment
                                         .centerLeft, // Atur alignment teks dalam sel
-                                    child: Text(rowData['Reports'].toString()),
+                                    child: Text(rowData['jenis'].toString()),
                                   ),
                                 ),
                                 DataCell(
                                   Container(
-                                      width: 100, // Atur lebar sel
-                                      height: 40, // Atur tinggi sel
+                                      width: 90, // Atur lebar sel
+                                      height: 50, // Atur tinggi sel
                                       alignment: Alignment
                                           .centerLeft, // Atur alignment teks dalam sel
-                                      child: Text(rowData['Gpa'].toString())),
+                                      child:
+                                          Text(rowData['report'].toString())),
                                 )
                               ],
                             );
