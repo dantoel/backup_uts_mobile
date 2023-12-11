@@ -1,8 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:survey_komplain/pages/home.dart';
 import 'package:survey_komplain/pages/login/register.dart';
-import 'package:dio/dio.dart';
+import 'package:survey_komplain/pages/survey/home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class LoginPage extends StatefulWidget {
 }
 
 final dio = Dio();
-String url_domain = "http://192.168.0.119:8000";
+String url_domain = "http://192.168.1.18:8000";
 
 String _nim = '';
 String _password = '';

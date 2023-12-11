@@ -1,7 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:survey_komplain/pages/login/login.dart';
-import 'package:dio/dio.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -26,7 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   final dio = Dio();
-  String url_domain = "http://192.168.77.172:8000";
+  String url_domain = "http://192.168.1.18:8000";
 
   int _nim = 0;
   String _nama = '';

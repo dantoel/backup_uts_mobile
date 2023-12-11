@@ -4,14 +4,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:survey_komplain/controller/dbhelper.dart';
 import 'package:survey_komplain/models/item.dart';
+import 'package:survey_komplain/pages/laporan_kekerasan/form_laporan.dart';
+import 'package:survey_komplain/pages/survey/detail_responden.dart';
 
-import 'detail_responden.dart';
+import 'detail_kekerasan.dart';
 import 'faktor_permasalahan.dart';
 import 'form_tambah.dart';
-import 'laporan_kekerasan/form_laporan.dart';
 import 'total_responden_gender.dart';
 import 'total_responden_negara.dart';
-import 'detail_kekerasan.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -59,11 +59,11 @@ class _HomePageState extends State<HomePage> {
                     var data = await navigateToEntryFormKekerasan(context);
                   },
                   style: ElevatedButton.styleFrom(
-                    primary:
-                        Colors.red[700], // Ganti dengan warna yang diinginkan
+                    primary: Colors.red[700], // warna latar belakang button
+                    onPrimary: Colors.white, // warna teks
                   ),
                   child: Text("Laporkan"),
-                ),
+                )
               ],
             ),
           ),
@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
 
   final dio = Dio();
 
-  String url_domain = "http://192.168.0.119:8000/";
+  String url_domain = "http://192.168.1.18:8000/";
   // String url_count_responden = ;
   // String url_create_data = "${url_domain}api/create_data";
   // String url_show_data = "${url_domain}api/show_data";
@@ -199,7 +199,9 @@ class _HomePageState extends State<HomePage> {
                                                 context);
                                       },
                                       style: ElevatedButton.styleFrom(
-                                        primary: Colors.red[700],
+                                        primary: Colors.red[
+                                            700], // warna latar belakang button
+                                        onPrimary: Colors.white,
                                       ),
                                       child: Text("Tambah Laporan Kekerasan"),
                                     ),
@@ -209,7 +211,9 @@ class _HomePageState extends State<HomePage> {
                                             await navigateToEntryForm(context);
                                       },
                                       style: ElevatedButton.styleFrom(
-                                        primary: Colors.red[700],
+                                        primary: Colors.red[
+                                            700], // warna latar belakang button
+                                        onPrimary: Colors.white,
                                       ),
                                       child: Text("Tambah Laporan Survey"),
                                     ),
