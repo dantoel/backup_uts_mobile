@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:survey_komplain/pages/mahasiswa/home_mahasiswa.dart';
 import 'package:survey_komplain/pages/survey/home.dart';
+import 'package:survey_komplain/pages/laporan_kekerasan/dashboard_laporan.dart';
 
 class Homeasli extends StatelessWidget {
   @override
@@ -22,7 +23,7 @@ class Homeasli extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Center(
                       child: Text(
-                        'Sistem pendataan survey fasilitasi kampus dengan efisien dan mudah',
+                        'Selamat datang! \nBerikut menu yang berhak anda akses',
                         style: TextStyle(
                             fontSize: 16,
                             color: Colors.white,
@@ -34,7 +35,7 @@ class Homeasli extends StatelessWidget {
                 ],
               ),
             ),
-
+/*
             // Section 2
             Container(
               height: MediaQuery.of(context).size.height / 4,
@@ -53,7 +54,7 @@ class Homeasli extends StatelessWidget {
                 ),
               ),
             ),
-
+*/
             // Section 3
             Expanded(
               child: Padding(
@@ -94,16 +95,19 @@ class Homeasli extends StatelessWidget {
                                     size: 50,
                                   ),
                                   SizedBox(width: 20),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text('Data Mahasiswa',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold)),
-                                      Text('Seluruh informasi data mahasiswa'),
-                                    ],
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text('SIAKAD',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold)),
+                                        Text(
+                                            'Sistem Informasi akademik mahasiswa'),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -135,18 +139,66 @@ class Homeasli extends StatelessWidget {
                                     size: 50,
                                   ),
                                   SizedBox(width: 20),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text('Survey Fasilitas',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold)),
-                                      Text(
-                                        'Seluruh informasi survey fasilitas',
-                                      ),
-                                    ],
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text('SIANGKET',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold)),
+                                        Text(
+                                          'Sistem Informasi Data Kuisioner Mahasiswa',
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => dashboard_laporan()),
+                          );
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          child: Card(
+                            color: Colors.amber[500],
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 30),
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.data_thresholding,
+                                    size: 50,
+                                  ),
+                                  SizedBox(width: 20),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text('SIPKS',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold)),
+                                        Text(
+                                          'Sistem Informasi Pelaporan Kekerasan Seksual Mahasiswa',
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),

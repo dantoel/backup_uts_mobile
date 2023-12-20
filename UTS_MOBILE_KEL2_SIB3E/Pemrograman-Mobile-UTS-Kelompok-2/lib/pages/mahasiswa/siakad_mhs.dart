@@ -1,12 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:survey_komplain/pages/login/login.dart';
+import 'package:survey_komplain/pages/laporan_kekerasan/form_laporan.dart';
+import 'package:survey_komplain/models/item.dart';
 
-class detail_kekerasan extends StatefulWidget {
+class siakad_mhs extends StatefulWidget {
   @override
-  State<detail_kekerasan> createState() => _detail_kekerasanState();
+  State<siakad_mhs> createState() => _siakad_mhsState();
 }
 
-class _detail_kekerasanState extends State<detail_kekerasan> {
+class _siakad_mhsState extends State<siakad_mhs> {
   final dio = Dio();
   List<Map<String, dynamic>> data = [];
 
@@ -15,12 +18,16 @@ class _detail_kekerasanState extends State<detail_kekerasan> {
   @override
   void initState() {
     super.initState();
-    data_kekerasan();
+    //nilai_mhs();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      _showReportDialog();
+    });
   }
 
-  Future<dynamic> data_kekerasan() async {
+/*
+  Future<dynamic> nilai_mhs() async {
     try {
-      var response = await dio.post("${url_domain}/api/detail_kekerasan");
+      var response = await dio.post("${url_domain}/api/nilai_matkul");
       var result = response.data;
       //return result;
       if (result is List) {
@@ -31,6 +38,55 @@ class _detail_kekerasanState extends State<detail_kekerasan> {
       print('error : ${e.toString()}');
       rethrow;
     }
+  }
+*/
+  Future<void> _showReportDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Image.asset(
+                  "assets/no_harashment.png",
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.contain,
+                ),
+                Text(
+                  "Apakah kamu pernah mengalami atau mengetahui kejadian kekerasan seksual?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () async {
+                    var data = await navigateToEntryFormKekerasan(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red[700], // warna latar belakang button
+                    onPrimary: Colors.white, // warna teks
+                  ),
+                  child: Text("Laporkan"),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<Item?> navigateToEntryFormKekerasan(BuildContext context) async {
+    var result = await Navigator.push(context,
+        MaterialPageRoute(builder: (BuildContext context) {
+      return FormLaporan();
+    }));
+    return result;
   }
 
   @override
@@ -104,7 +160,7 @@ class _detail_kekerasanState extends State<detail_kekerasan> {
                           padding: const EdgeInsets.only(bottom: 20),
                           child: Text(
                             // ignore: prefer_interpolation_to_compose_strings
-                            "Laporan Hasil Kekerasan ",
+                            "Nilai Mahasiswa \nFIRDA AGENG MIHARTO",
                             style: TextStyle(
                               fontWeight: FontWeight.w900,
                               fontSize: 25,
@@ -113,65 +169,69 @@ class _detail_kekerasanState extends State<detail_kekerasan> {
                           ),
                         ),
                         DataTable(
-                          columnSpacing: 10,
-                          dataRowMaxHeight: 90,
                           columns: const <DataColumn>[
                             DataColumn(
-                              label: Text(
-                                'Nama',
-                              ),
+                              label: Text('Mata Kuliah'),
                             ),
                             DataColumn(
-                              label: Text(
-                                'Jenis laporan',
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                'Isi Laporan',
-                              ),
+                              label: Text('Nilai'),
                             ),
                           ],
-                          rows: data.map((rowData) {
-                            return DataRow(
+                          rows: const <DataRow>[
+                            DataRow(
                               cells: <DataCell>[
-                                DataCell(
-                                  Container(
-                                    width: 80, // Atur lebar sel
-                                    height: 80, // Atur tinggi sel
-                                    alignment: Alignment
-                                        .centerLeft, // Atur alignment teks dalam sel
-                                    child: Text(rowData['nama'].toString()),
-                                  ), // Atur margin vertikal
-                                ),
-                                DataCell(
-                                  Container(
-                                    width: 70, // Atur lebar sel
-                                    height: 90, // Atur tinggi sel
-                                    alignment: Alignment
-                                        .centerLeft, // Atur alignment teks dalam sel
-                                    child: Text(rowData['jenis'].toString()),
-                                  ),
-                                ),
-                                DataCell(
-                                  Container(
-                                      width: 140, // Atur lebar sel
-                                      height: 90, // Atur tinggi sel
-                                      alignment: Alignment
-                                          .centerLeft, // Atur alignment teks dalam sel
-                                      child:
-                                          Text(rowData['report'].toString())),
-                                )
+                                DataCell(Text('Manajemen Proyek')),
+                                DataCell(Text('3')),
                               ],
-                            );
-                          }).toList(),
+                            ),
+                            DataRow(
+                              cells: <DataCell>[
+                                DataCell(Text('Keamanan Siber')),
+                                DataCell(Text('3.5')),
+                              ],
+                            ),
+                            DataRow(
+                              cells: <DataCell>[
+                                DataCell(Text('E-Business')),
+                                DataCell(Text('3')),
+                              ],
+                            ),
+                            DataRow(
+                              cells: <DataCell>[
+                                DataCell(Text('Pemrograman Mobile')),
+                                DataCell(Text('3.5')),
+                              ],
+                            ),
+                            DataRow(
+                              cells: <DataCell>[
+                                DataCell(Text('Sistem Pendukung Keputusan')),
+                                DataCell(Text('3')),
+                              ],
+                            ),
+                            DataRow(
+                              cells: <DataCell>[
+                                DataCell(Text('Proyek 3')),
+                                DataCell(Text('4')),
+                              ],
+                            ),
+                            DataRow(
+                              cells: <DataCell>[
+                                DataCell(Text('Indeks Prestasi')),
+                                DataCell(Text('3')),
+                              ],
+                            ),
+                          ],
                         ),
                         Container(
                           width: double.infinity,
                           margin: const EdgeInsets.all(20),
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.red[800],

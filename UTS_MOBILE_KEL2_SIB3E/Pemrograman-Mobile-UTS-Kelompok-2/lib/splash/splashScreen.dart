@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:survey_komplain/pages/homeasli.dart';
 import 'package:survey_komplain/pages/login/register.dart';
+import 'package:survey_komplain/pages/login/login.dart';
 
 class splash extends StatefulWidget {
   const splash({super.key});
@@ -23,7 +24,7 @@ class _splashState extends State<splash> with SingleTickerProviderStateMixin {
         MaterialPageRoute(
           builder: (_) {
             if (true) {
-              return Homeasli();
+              return LoginPage();
             } else {
               return const RegisterPage();
             }

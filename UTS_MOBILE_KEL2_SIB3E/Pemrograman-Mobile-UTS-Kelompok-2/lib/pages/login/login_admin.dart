@@ -1,64 +1,82 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:survey_komplain/pages/login/login.dart';
+import 'package:survey_komplain/pages/survey/home.dart';
+import 'package:survey_komplain/pages/homeasli.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class login_admin extends StatefulWidget {
+  const login_admin({Key? key}) : super(key: key);
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<login_admin> createState() => _login_adminState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-  final _formKey = GlobalKey<FormState>();
+final dio = Dio();
+String url_domain = "http://192.168.0.109:8000";
 
-  final _nimController = TextEditingController();
-  final _namaController = TextEditingController();
-  final _nomorTeleponController = TextEditingController();
+String _email = '';
+String _password = '';
+
+class _login_adminState extends State<login_admin> {
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  final dio = Dio();
-  String url_domain = "http://192.168.0.109:8000";
-
-  int _nim = 0;
-  String _nama = '';
-  int _telepon = 0;
-  String _email = '';
-  String _password = '';
-
-  Future<void> register() async {
+  Future<void> login() async {
     try {
       Response response = await dio.post(
-        '$url_domain/api/register',
+        '$url_domain/api/login',
         data: {
-          'nim': _nim,
-          'nama': _nama,
-          'nomor_telepon': _telepon,
           'email': _email,
           'password': _password,
         },
       );
 
       if (response.statusCode == 200) {
+        //Map<String, dynamic> responseData = response.data;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Berhasil menyimpan data'),
+            content: Text('Berhasil Login'),
           ),
         );
-        // Reset form
+
+        // Reset form or any other actions upon successful login
         _formKey.currentState!.reset();
-      } else {
+
+        // You can use the response data to make further decisions
+        // For example, check if the response contains a token or user information
+        // and store it in a global state for future use
+
+        // Navigate to the HomePage
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            //ubah
+            builder: (_) => Homeasli(),
+          ),
+        );
+      } else if (response.statusCode == 404) {
+        //Map<String, dynamic> responseData = response.data;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Gagal menyimpan data'),
+            content: Text('Email Tidak Ditemukan'),
+          ),
+        );
+      } else if (response.statusCode == 401) {
+        //Map<String, dynamic> responseData = response.data;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Password Salah'),
+          ),
+        );
+      } else {
+        // Handle other status codes
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Gagal login. Silakan coba lagi.'),
           ),
         );
       }
@@ -66,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
       print('Terjadi kesalahan: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Terjadi kesalahan: $e'),
+          content: Text('Terjadi kesalahan. Silakan coba lagi.'),
         ),
       );
     }
@@ -101,7 +119,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: [
                       // Form Components
                       Text(
-                        "Register",
+                        "Login Admin",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -127,12 +145,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  primary: Colors.amber[700],
+                                  primary: Colors.red,
                                 ),
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 10),
-                                  child: Text("Login"),
+                                      vertical: 5, horizontal: 2),
+                                  child: Text("Login Mhs"),
                                 ),
                               ),
                             ),
@@ -147,12 +165,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                 if (_formKey.currentState!.validate()) {}
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.red,
+                                primary: Colors.amber[700],
                               ),
                               child: Container(
                                 padding: EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 10),
-                                child: Text("Register"),
+                                    vertical: 5, horizontal: 2),
+                                child: Text("Login Admin"),
                               ),
                             ),
                           ),
@@ -160,69 +178,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
 
                       TextFormField(
-                        //controller: _nimController,
+                        controller: _emailController,
                         decoration: InputDecoration(
-                          labelText: "Masukkan NIM",
-                        ),
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {
-                          int? parsednim = int.tryParse(value);
-                          if (parsednim != null) {
-                            setState(() {
-                              _nim = parsednim;
-                            });
-                          }
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your NIM';
-                          }
-                          return null;
-                        },
-                      ),
-                      TextFormField(
-                        //controller: _namaController,
-                        decoration: InputDecoration(
-                          labelText: "Masukkan Nama",
-                        ),
-                        keyboardType: TextInputType.multiline,
-                        onChanged: (value) {
-                          setState(() {
-                            _nama = value;
-                          });
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter the your name';
-                          }
-                          return null;
-                        },
-                      ),
-                      TextFormField(
-                        //controller: _nomorTeleponController,
-                        decoration: InputDecoration(
-                          labelText: "Masukkan Nomor Telepon",
-                        ),
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {
-                          int? parsedtelepon = int.tryParse(value);
-                          if (parsedtelepon != null) {
-                            setState(() {
-                              _telepon = parsedtelepon;
-                            });
-                          }
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter the telepon number';
-                          }
-                          return null;
-                        },
-                      ),
-                      TextFormField(
-                        //controller: _emailController,
-                        decoration: InputDecoration(
-                          labelText: "Masukkan E-mail",
+                          labelText: "Email",
                         ),
                         keyboardType: TextInputType.multiline,
                         onChanged: (value) {
@@ -231,80 +189,72 @@ class _RegisterPageState extends State<RegisterPage> {
                           });
                         },
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          if (value!.isEmpty) {
                             return 'Please enter your email';
-                          } else if (!value.contains('@')) {
-                            return 'Please enter a valid email address';
                           }
                           return null;
                         },
                       ),
+
                       TextFormField(
                         controller: _passwordController,
                         decoration: InputDecoration(
                           labelText: "Password",
                         ),
-                        keyboardType: TextInputType.multiline,
                         obscureText: true,
+                        keyboardType: TextInputType.multiline,
                         onChanged: (value) {
                           setState(() {
                             _password = value;
                           });
                         },
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
+                          if (value!.isEmpty) {
                             return 'Please enter a password';
                           }
                           return null;
                         },
                       ),
-                      /*
-                      TextFormField(
-                        //controller: _confirmPasswordController,
-                        decoration: InputDecoration(
-                          labelText: "Confirm Password",
-                        ),
-                        keyboardType: TextInputType.multiline,
-                        obscureText: true,
-                        onChanged: (value) {
-                          setState(() {
-                            _password = value;
-                          });
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter a password';
-                          } else if (value != _passwordController.text) {
-                            return 'Passwords do not match';
-                          }
-                          return null;
-                        },
-                      ), */
+
                       Container(
                         margin: EdgeInsets.only(top: 20),
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            // Validate the form first
                             if (_formKey.currentState?.validate() ?? false) {
-                              // TODO: Process registration
-                              register();
+                              try {
+                                // Call the login method
+                                await login();
+
+                                // If login is successful, navigate to the HomePage
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => Homeasli(),
+                                  ),
+                                );
+                              } catch (error) {
+                                print('Error: $error');
+                                // Handle login error if needed
+                              }
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            primary:
-                                Colors.red, // Set your desired background color
+                            primary: Colors.red,
                             textStyle: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color:
-                                  Colors.white, // Set your desired text color
+                              color: Colors.white,
                             ),
                             padding: EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 30),
+                              vertical: 15,
+                              horizontal: 30,
+                            ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                          child: Text("Register"),
+                          child: Text("Login"),
                         ),
                       ),
                     ],

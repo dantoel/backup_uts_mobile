@@ -8,13 +8,14 @@ import 'package:survey_komplain/models/item.dart';
 import 'package:survey_komplain/pages/laporan_kekerasan/form_laporan.dart';
 import 'package:survey_komplain/pages/mahasiswa/detail_mahasiswa.dart';
 import 'package:survey_komplain/pages/mahasiswa/detail_ipmatkul.dart';
+import 'package:survey_komplain/pages/survey/detail_kekerasan.dart';
 
-class HomeMahasiswa extends StatefulWidget {
+class dashboard_laporan extends StatefulWidget {
   @override
-  State<HomeMahasiswa> createState() => _HomeMahasiswaState();
+  State<dashboard_laporan> createState() => _dashboard_laporanState();
 }
 
-class _HomeMahasiswaState extends State<HomeMahasiswa> {
+class _dashboard_laporanState extends State<dashboard_laporan> {
   DbHelper dbHelper = DbHelper();
   int count = 0;
 
@@ -71,11 +72,11 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
 
   String url_domain = "http://192.168.0.109:8000/";
 
-  Future<dynamic> status_lulus() async {
+  Future<dynamic> hitung_pelecehan() async {
     try {
       var response = await dio.post(
-        "${url_domain}api/count_status_mhs",
-        queryParameters: {"status_akhir": "Lulus"},
+        "${url_domain}api/hitung_jenis_laporan",
+        queryParameters: {"jenis": "Pelecehan seksual"},
       );
       var result = response.data;
       return result;
@@ -85,11 +86,11 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
     }
   }
 
-  Future<dynamic> status_keluar() async {
+  Future<dynamic> hitung_kekerasan() async {
     try {
       var response = await dio.post(
-        "${url_domain}api/count_status_mhs",
-        queryParameters: {"status_akhir": "Keluar/Mengundurkan Diri"},
+        "${url_domain}api/hitung_jenis_laporan",
+        queryParameters: {"jenis": "Kekerasan"},
       );
       var result = response.data;
       return result;
@@ -99,13 +100,11 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
     }
   }
 
-  Future<dynamic> status_mengulangTA() async {
+  Future<dynamic> hitung_pencemaran() async {
     try {
       var response = await dio.post(
-        "${url_domain}api/count_status_mhs",
-        queryParameters: {
-          "status_akhir": "Mengulang Karena Tidak Lulus Tugas Akhir"
-        },
+        "${url_domain}api/hitung_jenis_laporan",
+        queryParameters: {"jenis": "Pencemaran nama baik"},
       );
       var result = response.data;
       return result;
@@ -115,13 +114,11 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
     }
   }
 
-  Future<dynamic> status_tidakJelas() async {
+  Future<dynamic> hitung_penghinaan() async {
     try {
       var response = await dio.post(
-        "${url_domain}api/count_status_mhs",
-        queryParameters: {
-          "status_akhir": "Tidak Aktif Mengulang TA (Mahasiswa Tidak Jelas)"
-        },
+        "${url_domain}api/hitung_jenis_laporan",
+        queryParameters: {"jenis": "Penghinaan"},
       );
       var result = response.data;
       return result;
@@ -131,26 +128,9 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
     }
   }
 
-  Future<dynamic> status_MDMaba() async {
+  Future<dynamic> hitung_total() async {
     try {
-      var response = await dio.post(
-        "${url_domain}api/count_status_mhs",
-        queryParameters: {"status_akhir": "MD MABA"},
-      );
-      var result = response.data;
-      return result;
-    } catch (e) {
-      print('error : ${e.toString()}');
-      rethrow;
-    }
-  }
-
-  Future<dynamic> status_terminal() async {
-    try {
-      var response = await dio.post(
-        "${url_domain}api/count_status_mhs",
-        queryParameters: {"status_akhir": "MD TDU setelah Cuti/TRM"},
-      );
+      var response = await dio.post("${url_domain}api/jumlah_laporan");
       var result = response.data;
       return result;
     } catch (e) {
@@ -171,7 +151,7 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Statistik Mahasiswa'),
+        title: Text('Statistik Laporan'),
         centerTitle: true,
         backgroundColor: Colors.white,
       ),
@@ -191,7 +171,7 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                             alignment: Alignment.centerLeft,
                             child: Padding(
                                 padding: EdgeInsets.all(5),
-                                child: Text("Persentase Status Mahasiswa"))),
+                                child: Text("Persentase Laporan"))),
                         //Chart
                         Expanded(
                           child: Row(
@@ -204,25 +184,25 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                                     PieChartData(
                                       sections: [
                                         PieChartSectionData(
-                                          value: 11,
+                                          value: 62,
                                           color: Colors.red,
-                                          title: '11%',
+                                          title: '62%',
                                         ),
                                         PieChartSectionData(
-                                          value: 77,
+                                          value: 12,
                                           color: Colors.green,
-                                          title: '77%',
+                                          title: '12%',
                                         ),
                                         PieChartSectionData(
-                                          value: 7,
+                                          value: 12,
                                           color: Colors.yellow,
-                                          title: '7%',
+                                          title: '12%',
                                         ),
                                         PieChartSectionData(
-                                          value: 5,
+                                          value: 12,
                                           color:
                                               Color.fromARGB(255, 255, 94, 0),
-                                          title: '5%',
+                                          title: '12%',
                                         ),
                                       ],
                                     ),
@@ -236,21 +216,21 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                                     children: [
                                       Icon(Icons.circle, color: Colors.green),
                                       SizedBox(width: 5),
-                                      Text('Lulus'),
+                                      Text('Penghinaan'),
                                     ],
                                   ),
                                   Row(
                                     children: [
                                       Icon(Icons.circle, color: Colors.red),
                                       SizedBox(width: 5),
-                                      Text('Keluar/MD'),
+                                      Text('Pelecehan'),
                                     ],
                                   ),
                                   Row(
                                     children: [
                                       Icon(Icons.circle, color: Colors.yellow),
                                       SizedBox(width: 5),
-                                      Text('Mengulang TA'),
+                                      Text('Pencemaran'),
                                     ],
                                   ),
                                   Row(
@@ -259,7 +239,7 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                                           color:
                                               Color.fromARGB(255, 255, 94, 0)),
                                       SizedBox(width: 5),
-                                      Text('Mahasiswa Tidak Jelas'),
+                                      Text('Kekerasan'),
                                     ],
                                   ),
                                 ],
@@ -272,7 +252,7 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                           children: [
                             // ... other status widgets ...
                             FutureBuilder(
-                              future: status_lulus(),
+                              future: hitung_pelecehan(),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
@@ -287,13 +267,13 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                                     child: Container(
                                       width: 80,
                                       height: 60,
-                                      color: Colors.green,
+                                      color: Color.fromARGB(255, 255, 0, 0),
                                       child: Padding(
                                         padding: EdgeInsets.all(5),
                                         child: Column(
                                           children: [
                                             Text(
-                                              "Lulus",
+                                              "Pelecehan",
                                               style: TextStyle(fontSize: 12),
                                             ),
                                             Text(
@@ -317,7 +297,7 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                                   top: 20, bottom: 20, left: 15),
                               child: FutureBuilder(
                                 future:
-                                    status_mengulangTA(), // Ganti dengan fungsi status_lulus
+                                    hitung_kekerasan(), // Ganti dengan fungsi status_lulus
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
@@ -329,13 +309,13 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                                     return Container(
                                       width: 80,
                                       height: 60,
-                                      color: Colors.yellow,
+                                      color: Color.fromARGB(255, 255, 98, 0),
                                       child: Padding(
                                         padding: EdgeInsets.all(5),
                                         child: Column(
                                           children: [
                                             Text(
-                                              "Mengulang TA",
+                                              "Kekerasan",
                                               style: TextStyle(fontSize: 10),
                                               textAlign: TextAlign.center,
                                             ),
@@ -361,7 +341,7 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                                   top: 20, bottom: 20, left: 15),
                               child: FutureBuilder(
                                 future:
-                                    status_keluar(), // Ganti dengan fungsi status_lulus
+                                    hitung_pencemaran(), // Ganti dengan fungsi status_lulus
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
@@ -373,13 +353,13 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                                     return Container(
                                       width: 80,
                                       height: 60,
-                                      color: Colors.red,
+                                      color: Color.fromARGB(255, 255, 234, 0),
                                       child: Padding(
                                         padding: EdgeInsets.all(5),
                                         child: Column(
                                           children: [
                                             Text(
-                                              "Keluar/MD",
+                                              "Pencemaran",
                                               style: TextStyle(fontSize: 12),
                                             ),
                                             Text(
@@ -402,7 +382,7 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                                   top: 20, bottom: 20, left: 15),
                               child: FutureBuilder(
                                 future:
-                                    status_tidakJelas(), // Ganti dengan fungsi status_lulus
+                                    hitung_penghinaan(), // Ganti dengan fungsi status_lulus
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
@@ -414,13 +394,13 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                                     return Container(
                                       width: 80,
                                       height: 60,
-                                      color: Color.fromARGB(255, 250, 112, 0),
+                                      color: Color.fromARGB(255, 137, 250, 0),
                                       child: Padding(
                                         padding: EdgeInsets.all(5),
                                         child: Column(
                                           children: [
                                             Text(
-                                              "Tidak Jelas",
+                                              "Penghinaan",
                                               style: TextStyle(fontSize: 12),
                                             ),
                                             Text(
@@ -466,6 +446,203 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                         )
                       ]),
                     ),
+                    ////baris 2
+                    Row(
+                      children: [
+                        // ... other status widgets ...
+                        FutureBuilder(
+                          future: hitung_total(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return CircularProgressIndicator();
+                            } else if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else {
+                              var data = snapshot.data;
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                    top: 20, bottom: 20, left: 15),
+                                child: Container(
+                                  width: 80,
+                                  height: 60,
+                                  color: Color.fromARGB(255, 255, 170, 0),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "Total laporan",
+                                          style: TextStyle(fontSize: 10),
+                                        ),
+                                        Text(
+                                          data.toString(),
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                        //Batas Awal Lulus
+                        Padding(
+                          padding:
+                              EdgeInsets.only(top: 20, bottom: 20, left: 15),
+                          child: FutureBuilder(
+                            future:
+                                hitung_kekerasan(), // Ganti dengan fungsi status_lulus
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                var data = snapshot.data;
+                                return Container(
+                                  width: 80,
+                                  height: 60,
+                                  color: Colors.yellow,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "Diproses",
+                                          style: TextStyle(fontSize: 10),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        Text(
+                                          "3",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                        //Batas Akhir Lulus
+                        //Batas Awal Keluar
+                        Padding(
+                          padding:
+                              EdgeInsets.only(top: 20, bottom: 20, left: 15),
+                          child: FutureBuilder(
+                            future:
+                                hitung_pencemaran(), // Ganti dengan fungsi status_lulus
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                var data = snapshot.data;
+                                return Container(
+                                  width: 80,
+                                  height: 60,
+                                  color: Colors.red,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "Ditolak",
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                        Text(
+                                          data.toString(),
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              EdgeInsets.only(top: 20, bottom: 20, left: 15),
+                          child: FutureBuilder(
+                            future:
+                                hitung_penghinaan(), // Ganti dengan fungsi status_lulus
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                var data = snapshot.data;
+                                return Container(
+                                  width: 80,
+                                  height: 60,
+                                  color: Color.fromARGB(255, 0, 250, 71),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "Selesai",
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                        Text(
+                                          "5",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                        /*Padding(
+                              padding: EdgeInsets.only(
+                                  top: 20, bottom: 20, left: 15),
+                              child: Container(
+                                width: 80,
+                                height: 60,
+                                color: Colors.yellow,
+                                child: Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Column(children: [
+                                      Text(
+                                        "Keluar",
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                      Text(
+                                        "10",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ])),
+                              ),
+                            )
+                            */
+                      ],
+                    ),
                     Container(
                       width: double.infinity,
                       height: 200,
@@ -474,7 +651,7 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                             alignment: Alignment.centerLeft,
                             child: Padding(
                                 padding: EdgeInsets.all(5),
-                                child: Text("Rata-rata IPK Per Tahun"))),
+                                child: Text("Grafik Laporan Masuk"))),
                         Expanded(
                           child: Padding(
                             padding: EdgeInsets.only(top: 10, left: 50),
@@ -486,10 +663,10 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                                 lineBarsData: [
                                   LineChartBarData(
                                     spots: [
-                                      FlSpot(1, 3.65), //tahun 2018
-                                      FlSpot(2, 3.47), //tahun 2019
-                                      FlSpot(3, 3.67), //tahun 2020
-                                      FlSpot(4, 3.83), //tahun 2021
+                                      FlSpot(1, 2), //tahun 2018
+                                      FlSpot(2, 1), //tahun 2019
+                                      FlSpot(3, 2), //tahun 2020
+                                      FlSpot(4, 3), //tahun 2021
                                     ],
                                   ),
                                 ],
@@ -501,13 +678,13 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                                       getTitlesWidget: (value, meta) {
                                         switch (value.toInt()) {
                                           case 1:
-                                            return Text('2018');
+                                            return Text('Sep');
                                           case 2:
-                                            return Text('2019');
+                                            return Text('Okt');
                                           case 3:
-                                            return Text('2020');
+                                            return Text('Nov');
                                           case 4:
-                                            return Text('2021');
+                                            return Text('Des');
                                           default:
                                             return SizedBox.shrink();
                                         }
@@ -534,50 +711,7 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
               ),
             ),
             //======================= grid ================
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => detail_ipmatkul()),
-                  );
-                },
-                child: Container(
-                  width: double.infinity,
-                  child: Card(
-                    color: Color.fromARGB(255, 167, 244, 0),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 30),
-                      child: Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.data_thresholding,
-                            size: 50,
-                          ),
-                          SizedBox(width: 20),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text('Kelola Nilai Mahasiswa',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold)),
-                                Text(
-                                  'Semester Ganjil 2023/2024',
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+
             //=============== Tombol Bawah ================
             Container(
               width: double.infinity,
@@ -586,7 +720,7 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                 onPressed: () async {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => detail_mahasiswa()),
+                    MaterialPageRoute(builder: (context) => detail_kekerasan()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -597,7 +731,7 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
                   ),
                 ),
                 child: const Text(
-                  "Lihat IPK Mahasiswa",
+                  "Lihat Detail Laporan",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

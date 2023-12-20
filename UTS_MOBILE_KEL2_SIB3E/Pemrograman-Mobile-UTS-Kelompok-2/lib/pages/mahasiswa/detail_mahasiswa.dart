@@ -10,7 +10,7 @@ class _detail_mahasiswaState extends State<detail_mahasiswa> {
   final dio = Dio();
   List<Map<String, dynamic>> data = [];
 
-  String url_domain = "http://192.168.0.119:8000/";
+  String url_domain = "http://192.168.0.109:8000/";
 
   @override
   void initState() {
@@ -124,7 +124,7 @@ class _detail_mahasiswaState extends State<detail_mahasiswa> {
                             ),
                             DataColumn(
                               label: Text(
-                                'Nama mhs',
+                                'Nama Mhs',
                                 style: TextStyle(fontStyle: FontStyle.italic),
                               ),
                             ),

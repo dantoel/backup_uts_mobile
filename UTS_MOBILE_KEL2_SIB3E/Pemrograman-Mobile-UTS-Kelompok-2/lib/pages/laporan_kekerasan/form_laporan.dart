@@ -14,7 +14,7 @@ class FormLaporanState extends State<FormLaporan> {
   late String _filePath; // Menyimpan path file yang dipilih
 
   final dio = Dio();
-  String url_domain = "http://192.168.1.18:8000";
+  String url_domain = "http://192.168.0.109:8000";
 
   final _formKey = GlobalKey<FormState>();
 

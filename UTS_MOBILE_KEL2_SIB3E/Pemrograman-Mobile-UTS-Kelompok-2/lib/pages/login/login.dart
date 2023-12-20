@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:survey_komplain/pages/login/register.dart';
 import 'package:survey_komplain/pages/survey/home.dart';
+import 'package:survey_komplain/pages/homeasli.dart';
+import 'package:survey_komplain/pages/login/login_admin.dart';
+import 'package:survey_komplain/pages/mahasiswa/siakad_mhs.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,7 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 final dio = Dio();
-String url_domain = "http://192.168.1.18:8000";
+String url_domain = "http://192.168.0.109:8000";
 
 String _nim = '';
 String _password = '';
@@ -51,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (_) => HomePage(),
+            builder: (_) => siakad_mhs(),
           ),
         );
       } else if (response.statusCode == 404) {
@@ -115,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       // Form Components
                       Text(
-                        "Login",
+                        "Login Mahasiswa",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -140,8 +143,8 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 child: Container(
                                   padding: EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 10),
-                                  child: Text("Login"),
+                                      vertical: 5, horizontal: 2),
+                                  child: Text("Login Mhs"),
                                 ),
                               ),
                             ),
@@ -156,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => RegisterPage(),
+                                    builder: (_) => login_admin(),
                                   ),
                                 );
                               },
@@ -165,8 +168,8 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               child: Container(
                                 padding: EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 10),
-                                child: Text("Register"),
+                                    vertical: 5, horizontal: 2),
+                                child: Text("Login Admin"),
                               ),
                             ),
                           ),
@@ -186,7 +189,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Please enter your NIM';
+                            return 'Masukkan NIM anda';
                           }
                           return null;
                         },
@@ -206,7 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Please enter a password';
+                            return 'Masukkan Password Anda';
                           }
                           return null;
                         },
@@ -226,7 +229,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => HomePage(),
+                                    builder: (_) => siakad_mhs(),
                                   ),
                                 );
                               } catch (error) {
