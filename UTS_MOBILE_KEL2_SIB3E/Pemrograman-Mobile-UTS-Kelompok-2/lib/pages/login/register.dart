@@ -26,7 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   final dio = Dio();
-  String url_domain = "http://192.168.0.109:8000";
+  String url_domain = "http://192.168.43.8:8000";
 
   int _nim = 0;
   String _nama = '';

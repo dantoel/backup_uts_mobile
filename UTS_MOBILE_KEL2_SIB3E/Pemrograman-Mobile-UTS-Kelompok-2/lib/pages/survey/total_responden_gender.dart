@@ -21,7 +21,7 @@ class _total_responden_genderState extends State<total_responden_gender> {
     'Female': 456,
   };
 
-  String url_domain = "http://192.168.0.109:8000";
+  String url_domain = "http://192.168.43.8:8000";
 
   @override
   void initState() {

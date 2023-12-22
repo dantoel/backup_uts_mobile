@@ -28,7 +28,7 @@ class _detail_mahasiswaState extends State<detail_mahasiswa> {
 
 
 
-  String url_domain = "http://192.168.0.109:8000/";
+  String url_domain = "http://192.168.43.8:8000/";
 
   @override
   void initState() {
@@ -70,7 +70,7 @@ class _detail_ipmatkulState extends State<detail_ipmatkul> {
   final ipsController = TextEditingController();
   final statusController = TextEditingController();
 
-  String url_domain = "http://192.168.0.109:8000/";
+  String url_domain = "http://192.168.43.8:8000/";
 
   Future<void> fetchData() async {
     try {

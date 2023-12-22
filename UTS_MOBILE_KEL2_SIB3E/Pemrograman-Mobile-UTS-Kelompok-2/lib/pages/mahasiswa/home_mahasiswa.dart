@@ -69,7 +69,7 @@ class _HomeMahasiswaState extends State<HomeMahasiswa> {
 
   final dio = Dio();
 
-  String url_domain = "http://192.168.0.109:8000/";
+  String url_domain = "http://192.168.43.8:8000/";
 
   Future<dynamic> status_lulus() async {
     try {

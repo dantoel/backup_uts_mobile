@@ -13,7 +13,7 @@ class _siakad_mhsState extends State<siakad_mhs> {
   final dio = Dio();
   List<Map<String, dynamic>> data = [];
 
-  String url_domain = "http://192.168.0.109:8000";
+  String url_domain = "http://192.168.43.8:8000";
 
   @override
   void initState() {

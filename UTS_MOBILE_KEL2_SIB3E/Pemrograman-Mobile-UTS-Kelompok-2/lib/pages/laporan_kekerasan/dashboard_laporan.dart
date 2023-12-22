@@ -70,7 +70,7 @@ class _dashboard_laporanState extends State<dashboard_laporan> {
 
   final dio = Dio();
 
-  String url_domain = "http://192.168.0.109:8000/";
+  String url_domain = "http://192.168.43.8:8000/";
 
   Future<dynamic> hitung_pelecehan() async {
     try {
