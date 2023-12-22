@@ -4,7 +4,9 @@
 ## Link Youtube
 
 <p align="center">
-[![YouTube Video](/images/presentasi.png)](https://www.youtube.com/watch?v=RO-ZHSvAZMk)
+  <a href="https://www.youtube.com/watch?v=RO-ZHSvAZMk">
+    <img src="/images/presentasi.png" alt="YouTube Video">
+  </a>
 </p>
 
 ## Daftar Peserta
