@@ -4,7 +4,7 @@
 ## Link Youtube
 
 <p align="center">
-  <a href="<iframe width="560" height="315" src="https://www.youtube.com/embed/RO-ZHSvAZMk?si=iIpJHJkjmcKs7Ulc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>">
+  <a href="https://youtu.be/RO-ZHSvAZMk?si=_fnmNs0jVelWOvYB">
     <img src="LINK YOUTUBE.jpg" alt="Presentasi UAS_Kelompok 2">
   </a>
 </p>
@@ -31,18 +31,19 @@
 #### Berikut adalah penjelasan fitur dari aplikasi Survey Peek dari segi user Admin dan Mahasiswa : 
 <br>
 ### Login Sebagai Admin
-Admin melakukan login dengan akun username dan password yang sebelumnya telah dibuat. Berikut tampilan form login Admin : 
-<img src="/images/halaman_login_admin.png" alt="Alternative Text">
+Admin melakukan login dengan akun username dan password yang sebelumnya telah dibuat. Berikut tampilan form login Admin :
+<div align="center"> 
+<img src="/images/halaman_login_admin.png" alt="Alternative Text"> </div>
 
 <br>
 
 ### Halaman Menu Utama Admin 
-Setelah login sebagai admin, maka terdapat tampilan seperti gambar berikut yang terdiri dari tiga menu utama :
+Setelah login sebagai admin, maka terdapat tampilan seperti gambar berikut yang terdiri dari tiga menu utama : <br>
+<<div align="center">
 <img src="/images/halaman_home_admin.png" alt="Alternative Text">
-<br>
+</div>
 
 ### Menu SIAKAD
-<img src="/images/dashboard_siakad.png" alt="Alternative Text">
 Pada menu SIAKAD terdapat beberapa visualisasi yang berasal dari data akademik yang telah diberikan sebelumnya. Visualisasi tersebut terdiri dari : 
 Persentase Status Mahasiswa
 Dari visualisasi ini dapat dilihat persentase mahasiswa dengan status lulus sebanyak 77 %, status keluar atau mengundurkan diri sebanyak 11% , status mengulang TA sebanyak 7% dan status mahasiswa tidak jelas sebanyak 5%.
@@ -51,9 +52,9 @@ Dari visualisasi ini dapat dilihat jumlah mahasiswa dalam masing-masing status. 
 Rata-rata IPK Per Tahun
 Pada visualisasi ini dapat dilihat bahwa rata-rata IPK terendah ada pada tahun 2019 dengan jumlah …… dan IPK tertinggi ada pada tahun 2021 dengan jumlah …….
 Pada menu selanjutnya setelah visualisasi ada menu “Kelola Nilai Mahasiswa” yang berasal dari data akademik semester ganjil 2023/2024.
-
-
-
+<<div align="center">
+<img src="/images/dashboard_siakad.png" alt="Alternative Text">
+</div>
 
 
 
@@ -67,13 +68,16 @@ Pada menu selanjutnya setelah visualisasi ada menu “Kelola Nilai Mahasiswa” 
 
 
 Berikut tampilan yang dihasilkan jika menu kelola mahasiswa dibuka. Nah pada bagian ini, admin dapat melakukan edit atau kelola nilai di masing-masing mata kuliah dengan output nilai IPS dan status mahasiswa tersebut. Jangan lupa klik Save setelah melakukan perubahan data.
+<div align="center">
 <img src="/images/kelola_nilai_mhs.png" alt="Alternative Text">
 <img src="/images/edit_nilai_mhs.png" alt="Alternative Text">
-
+</div>
 
 Menu terakhir yang ada pada SIAKAD adalah menu “Lihat IPK Mahasiswa” 
 Dimana merupakan menu untuk melihat detail responden mahasiswanya yang terdiri dari kolom NIM, nama mahasiswa, status, dan IPK yang sudah di kumulatif dari nilai IPS sebelumnya.
+<<div align="center">
 <img src="/images/rekap_ipk_mhs.png" alt="Alternative Text">
+</div>
 
 <br>
 ### Menu SIANGKET
